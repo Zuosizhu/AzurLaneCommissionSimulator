@@ -36,8 +36,8 @@ while True:
     for _ in range(18):
         if dataline[_] == '' or dataline[_] == '\n':
             dataline[_] = 0
-    (num, code, name, time, oil_consumed, oil_gain, chip, coin, cube, gem, book, decor_coin, retro, box, drill, plate,
-     rate, time_limit) = dataline
+    (num, code, name, time, time_limit, oil_consumed, oil_gain, chip, coin, cube, gem, book, decor_coin, retro, box, drill, plate,
+     rate) = dataline
     time = round(float(time) * 6)*10
     rate = float(rate)
     time_limit = round(float(time_limit) * 6)*10
