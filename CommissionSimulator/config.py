@@ -6,7 +6,7 @@ config = {
 """
 
 config = {
-    'time': 30,
+    'time': 1000,
     'rate': 0.02,
-    'print_commission_done': False,
+    'print_commission_done': True,
 }

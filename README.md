@@ -7,7 +7,7 @@ Guidance:
 
   2, Just run it in your way. 
 
-  (Or with alas console: Copy the CommissionSimulator folder to the root of Alas and type "python CommissionSimulator\simulator.py" in Alas Console.bat).
+  (Or with alas console: Copy the CommissionSimulator folder to the root of Alas and type "python .\CommissionSimulator\simulator.py" in Alas's Console.bat).
 
 
 一坨及其缓慢的屎山，用于评估现有的过滤器收入。
@@ -16,4 +16,4 @@ Guidance:
 
   1，修改CommissionSimulator\config.py 与 CommissionSimulator\filter.py的配置
   
-  2，若系统有python环境，可以运行simulator.bat。否则可以将CommissionSimulator文件夹拷贝至Alas根目录，然后在Alas Console.bat中输入python CommissionSimulator\simulator.py
+  2，若系统有python环境，可以运行simulator.bat。否则可以将CommissionSimulator文件夹拷贝至Alas根目录，然后在Alas的Console.bat中输入python .\CommissionSimulator\simulator.py。

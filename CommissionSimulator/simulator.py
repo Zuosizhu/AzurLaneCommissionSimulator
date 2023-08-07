@@ -354,7 +354,7 @@ if __name__ == '__main__':
         exit('Illegal config.')
     CE.run_emulate()
     timestamp_2 = time.time()
-    print(f'Time: {CE.config["time"]} Days Drop rate: {CE.config["rate"]}')
+    print(f'Time: {CE.config["time"]} Days | Drop rate: {CE.config["rate"]}')
     max_len_total = len('%.4f' % round(CE.total_income['oil'], 4))
     for k, v in CE.total_income.items():
         k = k.capitalize()
