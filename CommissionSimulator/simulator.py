@@ -367,4 +367,6 @@ if __name__ == '__main__':
     if CE.config['print_commission_done']:
         print('Commissions done:')
         for _ in range(count):
+            if CE.commissions_done[_+1] == 0:
+                continue
             print('  ' + commissions[_]['name'] + ': ', CE.commissions_done[_+1])
