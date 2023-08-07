@@ -364,6 +364,7 @@ if __name__ == '__main__':
               (max_len_total + 1 - len(t))* ' ' + t)
     commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
     print('Time taken: ', '%.2f' % round(timestamp_2 - timestamp_1, 2), 'Seconds')
-    print('Commissions done:')
-    for _ in range(count):
-        print('  ' + commissions[_]['name'] + ': ', CE.commissions_done[_+1])
+    if CE.config['print_commission_done']:
+        print('Commissions done:')
+        for _ in range(count):
+            print('  ' + commissions[_]['name'] + ': ', CE.commissions_done[_+1])
