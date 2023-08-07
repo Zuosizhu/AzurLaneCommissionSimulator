@@ -90,6 +90,7 @@ extra_commission_count = {len(extra_commission)}
 major_commission_count = {len(major_commission)}
 urgent_commission_count = {len(urgent_commission)}
 night_commission_count = {len(night_commission)}
+count = {len(daily_commission)+len(extra_commission)+len(major_commission)+len(urgent_commission)+len(night_commission)}
 """)
 py.close()
 source.close()

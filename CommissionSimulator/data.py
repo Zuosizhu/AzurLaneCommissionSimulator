@@ -2607,7 +2607,7 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0375,
+    'rate': 0.0556,
     'type': 'Night',
 }]
 night_commissions += [{
@@ -2627,7 +2627,7 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0375,
+    'rate': 0.0556,
     'type': 'Night',
 }]
 night_commissions += [{
@@ -2687,7 +2687,7 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.125,
+    'rate': 0.0833,
     'type': 'Night',
 }]
 night_commissions += [{
@@ -2707,7 +2707,7 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.125,
+    'rate': 0.0833,
     'type': 'Night',
 }]
 night_commissions += [{
@@ -2767,7 +2767,7 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.3,
+    'rate': 0.111,
     'type': 'Night',
 }]
 night_commissions += [{
@@ -2787,7 +2787,7 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.3,
+    'rate': 0.111,
     'type': 'Night',
 }]
 daily_commission_count = 40
@@ -2795,3 +2795,4 @@ extra_commission_count = 30
 major_commission_count = 18
 urgent_commission_count = 39
 night_commission_count = 12
+count = 139

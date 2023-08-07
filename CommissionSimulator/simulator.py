@@ -1,3 +1,5 @@
+import datetime
+
 from data import *
 from random import random
 from config import config
@@ -15,6 +17,7 @@ class CommissionEmulator:
     major_commissions_exist = []
     commissions_run = []
     id_set = []
+    commissions_done = []
 
     def __init__(self):
         self.daily_commissions = daily_commissions
@@ -62,8 +65,8 @@ class CommissionEmulator:
         self.config = config
         # Load configs
 
-        priority = daily_commission_count + night_commission_count + major_commission_count \
-                    + urgent_commission_count + extra_commission_count + 1
+        self.commissions_done = [0 for _ in range(count + 1)]
+        priority = count + 1
 
         for _ in self.daily_commissions:
             _['priority'] = -priority
@@ -105,18 +108,17 @@ class CommissionEmulator:
                         self.urgent_commissions[_]['priority'] = priority
                 continue
             if 'shortest' == commission.lower():
-                self.daily_commissions = sorted(daily_commissions, key=lambda _:_['time'])
+                self.daily_commissions = sorted(daily_commissions, key=lambda _: _['time'])
                 for _ in range(len(self.daily_commissions)):
                     if daily_commissions[_]['priority'] == self.priority_none:
                         self.daily_commissions[_]['priority'] = priority
                         priority -= 1
-                self.daily_commissions = sorted(daily_commissions, key=lambda _:_['id'])
-                priority +=1
-
-
+                self.daily_commissions = sorted(daily_commissions, key=lambda _: _['id'])
+                priority += 1
 
     def finish_one(self, commission_to_finish: dict):
         self.id_set.remove(commission_to_finish['id'])
+        self.commissions_done[commission_to_finish['id']] += 1
         self.commissions_run.remove(commission_to_finish)
         for _k, _v in commission_to_finish.items():
             if _k in self.resource_tags:
@@ -204,11 +206,13 @@ class CommissionEmulator:
     def random_commission(self, commission_list: list, type_count: int) -> dict:
         rand = random()
         _ = int(rand // (1 / type_count))
-        if _ == 0:
+        if _ == 0 and rand <= commission_list[0]['total_rate']:
             return commission_list[0]
+        else:
+            _ = 1
         if _ >= type_count:
             _ = type_count - 1
-        if rand > commission_list[_]['total_rate']:
+        if rand > commission_list[type_count - 1]['total_rate']:
             return commission_list[type_count - 1]
         # Another piece of shit to accelerate
 
@@ -218,8 +222,8 @@ class CommissionEmulator:
                 continue
             if rand <= commission_list[_ - 1]['total_rate']:
                 _ -= 1
-                if _ == 0:
-                    return commission_list[0]
+            if _ == 0:
+                return commission_list[0]
         return commission_list[_]
 
     def run_one(self):
@@ -259,8 +263,8 @@ class CommissionEmulator:
         #                 return
 
         all_commissions_exist = self.daily_commissions_exist + self.urgent_commissions_exist + \
-            self.night_commissions_exist + self.major_commissions_exist
-        all_commissions_exist = sorted(all_commissions_exist, key=lambda _:_['priority'], reverse=True)
+                                self.night_commissions_exist + self.major_commissions_exist
+        all_commissions_exist = sorted(all_commissions_exist, key=lambda _: _['priority'], reverse=True)
 
         if all_commissions_exist[0]['priority'] == self.priority_none:
             shortest = 1000
@@ -343,7 +347,23 @@ class CommissionEmulator:
 
 
 if __name__ == '__main__':
+    import time
+    timestamp_1 = time.time()
     CE = CommissionEmulator()
+    if CE.config['time'] <= 0 or not 0 <= CE.config['rate'] <= 1:
+        exit('Illegal config.')
     CE.run_emulate()
+    timestamp_2 = time.time()
+    print(f'Time: {CE.config["time"]} Days Drop rate: {CE.config["rate"]}')
+    max_len_total = len('%.4f' % round(CE.total_income['oil'], 4))
     for k, v in CE.total_income.items():
-        print(k + ': ' + str(v))
+        k = k.capitalize()
+        t = '%.4f' % round(v, 4)
+        v = '%.4f' % round(v / CE.config['time'], 4)
+        print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((10 - len(v)) * ' ') + v + '/Day' + '     Total:' +
+              (max_len_total + 1 - len(t))* ' ' + t)
+    commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
+    print('Time taken: ', '%.2f' % round(timestamp_2 - timestamp_1, 2), 'Seconds')
+    print('Commissions done:')
+    for _ in range(count):
+        print('  ' + commissions[_]['name'] + ': ', CE.commissions_done[_+1])
