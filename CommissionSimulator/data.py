@@ -11,8 +11,8 @@ night_commissions = []
 
 
 daily_commissions += [{
-    'num': 1,
-    'code': 'DailyResource-1',
+    'id': 1,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发I',
     'time': 60,
     'time_limit': 0,
@@ -27,12 +27,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 2,
-    'code': 'DailyResource-1',
+    'id': 2,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发I',
     'time': 60,
     'time_limit': 0,
@@ -47,12 +47,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 3,
-    'code': 'DailyResource-1',
+    'id': 3,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发I',
     'time': 60,
     'time_limit': 0,
@@ -67,12 +67,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 4,
-    'code': 'DailyResource-1',
+    'id': 4,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发I',
     'time': 60,
     'time_limit': 0,
@@ -87,12 +87,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 5,
-    'code': 'DailyResource-1',
+    'id': 5,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发I',
     'time': 60,
     'time_limit': 0,
@@ -107,12 +107,12 @@ daily_commissions += [{
     'box': 7.5,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 6,
-    'code': 'DailyResource-2',
+    'id': 6,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发II',
     'time': 120,
     'time_limit': 0,
@@ -127,12 +127,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 7,
-    'code': 'DailyResource-2',
+    'id': 7,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发II',
     'time': 120,
     'time_limit': 0,
@@ -147,12 +147,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 8,
-    'code': 'DailyResource-2',
+    'id': 8,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发II',
     'time': 120,
     'time_limit': 0,
@@ -167,12 +167,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 9,
-    'code': 'DailyResource-2',
+    'id': 9,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发II',
     'time': 120,
     'time_limit': 0,
@@ -187,12 +187,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 10,
-    'code': 'DailyResource-2',
+    'id': 10,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发II',
     'time': 120,
     'time_limit': 0,
@@ -207,12 +207,12 @@ daily_commissions += [{
     'box': 7.5,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.01334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 11,
-    'code': 'DailyResource-1',
+    'id': 11,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发III',
     'time': 60,
     'time_limit': 0,
@@ -227,12 +227,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 12,
-    'code': 'DailyResource-1',
+    'id': 12,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发III',
     'time': 60,
     'time_limit': 0,
@@ -247,12 +247,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 13,
-    'code': 'DailyResource-1',
+    'id': 13,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发III',
     'time': 60,
     'time_limit': 0,
@@ -267,12 +267,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 14,
-    'code': 'DailyResource-1',
+    'id': 14,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发III',
     'time': 60,
     'time_limit': 0,
@@ -287,12 +287,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 15,
-    'code': 'DailyResource-1',
+    'id': 15,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发III',
     'time': 60,
     'time_limit': 0,
@@ -307,12 +307,12 @@ daily_commissions += [{
     'box': 7.5,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 16,
-    'code': 'DailyResource-2',
+    'id': 16,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发IV',
     'time': 120,
     'time_limit': 0,
@@ -327,12 +327,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 17,
-    'code': 'DailyResource-2',
+    'id': 17,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发IV',
     'time': 120,
     'time_limit': 0,
@@ -347,12 +347,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 18,
-    'code': 'DailyResource-2',
+    'id': 18,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发IV',
     'time': 120,
     'time_limit': 0,
@@ -367,12 +367,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 19,
-    'code': 'DailyResource-2',
+    'id': 19,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发IV',
     'time': 120,
     'time_limit': 0,
@@ -387,12 +387,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 20,
-    'code': 'DailyResource-2',
+    'id': 20,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发IV',
     'time': 120,
     'time_limit': 0,
@@ -407,12 +407,12 @@ daily_commissions += [{
     'box': 7.5,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.02,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 21,
-    'code': 'DailyResource-1',
+    'id': 21,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发V',
     'time': 60,
     'time_limit': 0,
@@ -427,12 +427,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 22,
-    'code': 'DailyResource-1',
+    'id': 22,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发V',
     'time': 60,
     'time_limit': 0,
@@ -447,12 +447,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 23,
-    'code': 'DailyResource-1',
+    'id': 23,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发V',
     'time': 60,
     'time_limit': 0,
@@ -467,12 +467,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 24,
-    'code': 'DailyResource-1',
+    'id': 24,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发V',
     'time': 60,
     'time_limit': 0,
@@ -487,12 +487,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 25,
-    'code': 'DailyResource-1',
+    'id': 25,
+    'tag': 'DailyResource-1',
     'name': '日常资源开发V',
     'time': 60,
     'time_limit': 0,
@@ -507,12 +507,12 @@ daily_commissions += [{
     'box': 7.5,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 26,
-    'code': 'DailyResource-2',
+    'id': 26,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发VI',
     'time': 120,
     'time_limit': 0,
@@ -527,12 +527,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 27,
-    'code': 'DailyResource-2',
+    'id': 27,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发VI',
     'time': 120,
     'time_limit': 0,
@@ -547,12 +547,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 28,
-    'code': 'DailyResource-2',
+    'id': 28,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发VI',
     'time': 120,
     'time_limit': 0,
@@ -567,12 +567,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 29,
-    'code': 'DailyResource-2',
+    'id': 29,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发VI',
     'time': 120,
     'time_limit': 0,
@@ -587,12 +587,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 30,
-    'code': 'DailyResource-2',
+    'id': 30,
+    'tag': 'DailyResource-2',
     'name': '日常资源开发VI',
     'time': 120,
     'time_limit': 0,
@@ -607,12 +607,12 @@ daily_commissions += [{
     'box': 7.5,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 31,
-    'code': 'DailyChip-1',
+    'id': 31,
+    'tag': 'DailyChip-1',
     'name': '高阶战术研发I',
     'time': 60,
     'time_limit': 0,
@@ -627,12 +627,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 32,
-    'code': 'DailyChip-1',
+    'id': 32,
+    'tag': 'DailyChip-1',
     'name': '高阶战术研发I',
     'time': 60,
     'time_limit': 0,
@@ -647,12 +647,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 33,
-    'code': 'DailyChip-1',
+    'id': 33,
+    'tag': 'DailyChip-1',
     'name': '高阶战术研发I',
     'time': 60,
     'time_limit': 0,
@@ -667,12 +667,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 34,
-    'code': 'DailyChip-1',
+    'id': 34,
+    'tag': 'DailyChip-1',
     'name': '高阶战术研发I',
     'time': 60,
     'time_limit': 0,
@@ -687,12 +687,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 35,
-    'code': 'DailyChip-1',
+    'id': 35,
+    'tag': 'DailyChip-1',
     'name': '高阶战术研发I',
     'time': 60,
     'time_limit': 0,
@@ -707,12 +707,12 @@ daily_commissions += [{
     'box': 7.5,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 36,
-    'code': 'DailyChip-2',
+    'id': 36,
+    'tag': 'DailyChip-2',
     'name': '高阶战术研发II',
     'time': 120,
     'time_limit': 0,
@@ -727,12 +727,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 37,
-    'code': 'DailyChip-2',
+    'id': 37,
+    'tag': 'DailyChip-2',
     'name': '高阶战术研发II',
     'time': 120,
     'time_limit': 0,
@@ -747,12 +747,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 38,
-    'code': 'DailyChip-2',
+    'id': 38,
+    'tag': 'DailyChip-2',
     'name': '高阶战术研发II',
     'time': 120,
     'time_limit': 0,
@@ -767,12 +767,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 39,
-    'code': 'DailyChip-2',
+    'id': 39,
+    'tag': 'DailyChip-2',
     'name': '高阶战术研发II',
     'time': 120,
     'time_limit': 0,
@@ -787,12 +787,12 @@ daily_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 daily_commissions += [{
-    'num': 40,
-    'code': 'DailyChip-2',
+    'id': 40,
+    'tag': 'DailyChip-2',
     'name': '高阶战术研发II',
     'time': 120,
     'time_limit': 0,
@@ -807,12 +807,12 @@ daily_commissions += [{
     'box': 7.5,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.025,
+    'rate': 0.0334,
     'type': 'Daily',
 }]
 extra_commissions += [{
-    'num': 41,
-    'code': 'ExtraPart-0:30',
+    'id': 41,
+    'tag': 'ExtraPart-0:30',
     'name': '初级矿脉护卫委托',
     'time': 30,
     'time_limit': 0,
@@ -827,12 +827,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.3,
-    'rate': 0.06,
+    'rate': 0.02,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 42,
-    'code': 'ExtraPart-0:30',
+    'id': 42,
+    'tag': 'ExtraPart-0:30',
     'name': '初级林木护卫委托',
     'time': 30,
     'time_limit': 0,
@@ -847,12 +847,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.3,
-    'rate': 0.06,
+    'rate': 0.02,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 43,
-    'code': 'ExtraBook-5',
+    'id': 43,
+    'tag': 'ExtraBook-5',
     'name': '小型商船护卫',
     'time': 300,
     'time_limit': 0,
@@ -867,12 +867,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.06,
+    'rate': 0.015,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 44,
-    'code': 'ExtraDrill-0:20',
+    'id': 44,
+    'tag': 'ExtraDrill-0:20',
     'name': '短距离航行训练',
     'time': 20,
     'time_limit': 0,
@@ -887,12 +887,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.06,
+    'rate': 0.02,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 45,
-    'code': 'ExtraCube-0:30',
+    'id': 45,
+    'tag': 'ExtraCube-0:30',
     'name': '舰队护卫演习',
     'time': 30,
     'time_limit': 0,
@@ -907,12 +907,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.06,
+    'rate': 0.02,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 46,
-    'code': 'ExtraDrill-2:40',
+    'id': 46,
+    'tag': 'ExtraDrill-2:40',
     'name': '近海防卫巡逻',
     'time': 160,
     'time_limit': 0,
@@ -927,12 +927,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.06,
+    'rate': 0.03,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 47,
-    'code': 'ExtraCube-4',
+    'id': 47,
+    'tag': 'ExtraCube-4',
     'name': '舰队初阶演习',
     'time': 240,
     'time_limit': 0,
@@ -947,12 +947,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.06,
+    'rate': 0.03,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 48,
-    'code': 'ExtraOil-1',
+    'id': 48,
+    'tag': 'ExtraOil-1',
     'name': '小型油田开发I',
     'time': 60,
     'time_limit': 0,
@@ -967,12 +967,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.06,
+    'rate': 0.02,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 49,
-    'code': 'ExtraOil-4',
+    'id': 49,
+    'tag': 'ExtraOil-4',
     'name': '中型油田开发I',
     'time': 240,
     'time_limit': 0,
@@ -991,8 +991,8 @@ extra_commissions += [{
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 50,
-    'code': 'ExtraOil-8',
+    'id': 50,
+    'tag': 'ExtraOil-8',
     'name': '大型油田开发I',
     'time': 480,
     'time_limit': 0,
@@ -1007,12 +1007,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.01,
+    'rate': 0.05,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 51,
-    'code': 'ExtraPart-1',
+    'id': 51,
+    'tag': 'ExtraPart-1',
     'name': '中级矿脉护卫委托',
     'time': 60,
     'time_limit': 0,
@@ -1031,8 +1031,8 @@ extra_commissions += [{
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 52,
-    'code': 'ExtraPart-1',
+    'id': 52,
+    'tag': 'ExtraPart-1',
     'name': '中级林木护卫委托',
     'time': 60,
     'time_limit': 0,
@@ -1051,8 +1051,8 @@ extra_commissions += [{
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 53,
-    'code': 'ExtraBook-6',
+    'id': 53,
+    'tag': 'ExtraBook-6',
     'name': '中型商船护卫',
     'time': 360,
     'time_limit': 0,
@@ -1067,12 +1067,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.03,
+    'rate': 0.02,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 54,
-    'code': 'ExtraDrill-1',
+    'id': 54,
+    'tag': 'ExtraDrill-1',
     'name': '中距离航行训练',
     'time': 60,
     'time_limit': 0,
@@ -1091,8 +1091,8 @@ extra_commissions += [{
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 55,
-    'code': 'ExtraCube-1:30',
+    'id': 55,
+    'tag': 'ExtraCube-1:30',
     'name': '舰队运输演习',
     'time': 90,
     'time_limit': 0,
@@ -1111,8 +1111,8 @@ extra_commissions += [{
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 56,
-    'code': 'ExtraDrill-3:20',
+    'id': 56,
+    'tag': 'ExtraDrill-3:20',
     'name': '海域浮标检查作业',
     'time': 200,
     'time_limit': 0,
@@ -1127,12 +1127,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.03,
+    'rate': 0.04,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 57,
-    'code': 'ExtraCube-5',
+    'id': 57,
+    'tag': 'ExtraCube-5',
     'name': '舰队中阶演习',
     'time': 300,
     'time_limit': 0,
@@ -1147,12 +1147,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.03,
+    'rate': 0.04,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 58,
-    'code': 'ExtraOil-1',
+    'id': 58,
+    'tag': 'ExtraOil-1',
     'name': '小型油田开发II',
     'time': 60,
     'time_limit': 0,
@@ -1167,12 +1167,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.06,
+    'rate': 0.02,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 59,
-    'code': 'ExtraOil-4',
+    'id': 59,
+    'tag': 'ExtraOil-4',
     'name': '中型油田开发II',
     'time': 240,
     'time_limit': 0,
@@ -1191,8 +1191,8 @@ extra_commissions += [{
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 60,
-    'code': 'ExtraOil-8',
+    'id': 60,
+    'tag': 'ExtraOil-8',
     'name': '大型油田开发II',
     'time': 480,
     'time_limit': 0,
@@ -1207,12 +1207,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.01,
+    'rate': 0.05,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 61,
-    'code': 'ExtraPart-1:30',
+    'id': 61,
+    'tag': 'ExtraPart-1:30',
     'name': '高级矿脉护卫委托',
     'time': 90,
     'time_limit': 0,
@@ -1227,12 +1227,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 1.2,
-    'rate': 0.01,
+    'rate': 0.05,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 62,
-    'code': 'ExtraPart-1:30',
+    'id': 62,
+    'tag': 'ExtraPart-1:30',
     'name': '高级林木护卫委托',
     'time': 90,
     'time_limit': 0,
@@ -1247,12 +1247,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 1.2,
-    'rate': 0.01,
+    'rate': 0.05,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 63,
-    'code': 'ExtraBook-8',
+    'id': 63,
+    'tag': 'ExtraBook-8',
     'name': '大型商船护卫',
     'time': 480,
     'time_limit': 0,
@@ -1267,12 +1267,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.01,
+    'rate': 0.025,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 64,
-    'code': 'ExtraDrill-2',
+    'id': 64,
+    'tag': 'ExtraDrill-2',
     'name': '远距离航行训练',
     'time': 120,
     'time_limit': 0,
@@ -1287,12 +1287,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.01,
+    'rate': 0.05,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 65,
-    'code': 'ExtraCube-3',
+    'id': 65,
+    'tag': 'ExtraCube-3',
     'name': '舰队实战演习',
     'time': 180,
     'time_limit': 0,
@@ -1307,12 +1307,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.01,
+    'rate': 0.05,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 66,
-    'code': 'ExtraDrill-5:20',
+    'id': 66,
+    'tag': 'ExtraDrill-5:20',
     'name': '前沿基地防卫巡逻',
     'time': 320,
     'time_limit': 0,
@@ -1327,12 +1327,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.3,
     'plate': 0.0,
-    'rate': 0.01,
+    'rate': 0.05,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 67,
-    'code': 'ExtraCube-8',
+    'id': 67,
+    'tag': 'ExtraCube-8',
     'name': '舰队高阶演习',
     'time': 480,
     'time_limit': 0,
@@ -1347,12 +1347,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.01,
+    'rate': 0.05,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 68,
-    'code': 'ExtraOil-1',
+    'id': 68,
+    'tag': 'ExtraOil-1',
     'name': '小型油田开发III',
     'time': 60,
     'time_limit': 0,
@@ -1367,12 +1367,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.06,
+    'rate': 0.02,
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 69,
-    'code': 'ExtraOil-4',
+    'id': 69,
+    'tag': 'ExtraOil-4',
     'name': '中型油田开发III',
     'time': 240,
     'time_limit': 0,
@@ -1391,8 +1391,8 @@ extra_commissions += [{
     'type': 'Extra',
 }]
 extra_commissions += [{
-    'num': 70,
-    'code': 'ExtraOil-8',
+    'id': 70,
+    'tag': 'ExtraOil-8',
     'name': '大型油田开发III',
     'time': 480,
     'time_limit': 0,
@@ -1407,12 +1407,12 @@ extra_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.01,
+    'rate': 0.05,
     'type': 'Extra',
 }]
 major_commissions += [{
-    'num': 71,
-    'code': 'Major-8',
+    'id': 71,
+    'tag': 'Major-8',
     'name': '初阶自主训练',
     'time': 480,
     'time_limit': 0,
@@ -1431,8 +1431,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 72,
-    'code': 'Major-9',
+    'id': 72,
+    'tag': 'Major-9',
     'name': '中阶自主训练',
     'time': 540,
     'time_limit': 0,
@@ -1451,8 +1451,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 73,
-    'code': 'Major-10',
+    'id': 73,
+    'tag': 'Major-10',
     'name': '高阶自主训练',
     'time': 600,
     'time_limit': 0,
@@ -1471,8 +1471,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 74,
-    'code': 'Major-8',
+    'id': 74,
+    'tag': 'Major-8',
     'name': '初阶对抗演习',
     'time': 480,
     'time_limit': 0,
@@ -1491,8 +1491,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 75,
-    'code': 'Major-9',
+    'id': 75,
+    'tag': 'Major-9',
     'name': '中阶对抗演习',
     'time': 540,
     'time_limit': 0,
@@ -1511,8 +1511,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 76,
-    'code': 'Major-10',
+    'id': 76,
+    'tag': 'Major-10',
     'name': '高阶对抗演习',
     'time': 600,
     'time_limit': 0,
@@ -1531,8 +1531,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 77,
-    'code': 'Major-8',
+    'id': 77,
+    'tag': 'Major-8',
     'name': '初阶科研任务',
     'time': 480,
     'time_limit': 0,
@@ -1551,8 +1551,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 78,
-    'code': 'Major-9',
+    'id': 78,
+    'tag': 'Major-9',
     'name': '中阶科研任务',
     'time': 540,
     'time_limit': 0,
@@ -1571,8 +1571,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 79,
-    'code': 'Major-10',
+    'id': 79,
+    'tag': 'Major-10',
     'name': '高阶科研任务',
     'time': 600,
     'time_limit': 0,
@@ -1591,8 +1591,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 80,
-    'code': 'Major-8',
+    'id': 80,
+    'tag': 'Major-8',
     'name': '初阶工具整备',
     'time': 480,
     'time_limit': 0,
@@ -1611,8 +1611,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 81,
-    'code': 'Major-9',
+    'id': 81,
+    'tag': 'Major-9',
     'name': '中阶工具整备',
     'time': 540,
     'time_limit': 0,
@@ -1631,8 +1631,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 82,
-    'code': 'Major-10',
+    'id': 82,
+    'tag': 'Major-10',
     'name': '高阶工具整备',
     'time': 600,
     'time_limit': 0,
@@ -1651,8 +1651,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 83,
-    'code': 'Major-8',
+    'id': 83,
+    'tag': 'Major-8',
     'name': '初阶战术课程',
     'time': 480,
     'time_limit': 0,
@@ -1671,8 +1671,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 84,
-    'code': 'Major-9',
+    'id': 84,
+    'tag': 'Major-9',
     'name': '中阶战术课程',
     'time': 540,
     'time_limit': 0,
@@ -1691,8 +1691,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 85,
-    'code': 'Major-10',
+    'id': 85,
+    'tag': 'Major-10',
     'name': '高阶战术课程',
     'time': 600,
     'time_limit': 0,
@@ -1711,8 +1711,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 86,
-    'code': 'Major-8',
+    'id': 86,
+    'tag': 'Major-8',
     'name': '初阶货物运输',
     'time': 480,
     'time_limit': 0,
@@ -1731,8 +1731,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 87,
-    'code': 'Major-9',
+    'id': 87,
+    'tag': 'Major-9',
     'name': '中阶货物运输',
     'time': 540,
     'time_limit': 0,
@@ -1751,8 +1751,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 major_commissions += [{
-    'num': 88,
-    'code': 'Major-10',
+    'id': 88,
+    'tag': 'Major-10',
     'name': '高阶货物运输',
     'time': 600,
     'time_limit': 0,
@@ -1771,8 +1771,8 @@ major_commissions += [{
     'type': 'Major',
 }]
 urgent_commissions += [{
-    'num': 89,
-    'code': 'UrgentBook-0:30',
+    'id': 89,
+    'tag': 'UrgentBook-0:30',
     'name': '支援土豪尔岛',
     'time': 30,
     'time_limit': 120,
@@ -1791,8 +1791,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 90,
-    'code': 'UrgentPart-0:30',
+    'id': 90,
+    'tag': 'UrgentPart-0:30',
     'name': '支援维拉维拉岛',
     'time': 30,
     'time_limit': 120,
@@ -1811,8 +1811,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 91,
-    'code': 'UrgentDrill-1',
+    'id': 91,
+    'tag': 'UrgentDrill-1',
     'name': '保卫运输部队Ⅰ',
     'time': 60,
     'time_limit': 180,
@@ -1831,8 +1831,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 92,
-    'code': 'UrgentCube-1:30',
+    'id': 92,
+    'tag': 'UrgentCube-1:30',
     'name': '解救商船Ⅰ',
     'time': 90,
     'time_limit': 180,
@@ -1851,8 +1851,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 93,
-    'code': 'UrgentBox-1',
+    'id': 93,
+    'tag': 'UrgentBox-1',
     'name': 'BIW装备运输',
     'time': 60,
     'time_limit': 320,
@@ -1871,8 +1871,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 94,
-    'code': 'UrgentBox-1',
+    'id': 94,
+    'tag': 'UrgentBox-1',
     'name': 'NYB装备运输',
     'time': 60,
     'time_limit': 320,
@@ -1891,8 +1891,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 95,
-    'code': 'UrgentPart-1',
+    'id': 95,
+    'tag': 'UrgentPart-1',
     'name': '支援“伊”岛',
     'time': 60,
     'time_limit': 120,
@@ -1911,8 +1911,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 96,
-    'code': 'UrgentBook-1',
+    'id': 96,
+    'tag': 'UrgentBook-1',
     'name': '支援姆波罗岛',
     'time': 60,
     'time_limit': 120,
@@ -1931,8 +1931,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 97,
-    'code': 'UrgentDrill-1:10',
+    'id': 97,
+    'tag': 'UrgentDrill-1:10',
     'name': '歼灭敌侦查部队',
     'time': 70,
     'time_limit': 140,
@@ -1951,8 +1951,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 98,
-    'code': 'UrgentCube-1:45',
+    'id': 98,
+    'tag': 'UrgentCube-1:45',
     'name': '敌袭Ⅰ',
     'time': 100,
     'time_limit': 140,
@@ -1971,8 +1971,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 99,
-    'code': 'Gem-2',
+    'id': 99,
+    'tag': 'Gem-2',
     'name': 'BIW要员护卫',
     'time': 120,
     'time_limit': 320,
@@ -1991,8 +1991,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 100,
-    'code': 'Gem-2',
+    'id': 100,
+    'tag': 'Gem-2',
     'name': 'NYB要员护卫',
     'time': 120,
     'time_limit': 320,
@@ -2011,8 +2011,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 101,
-    'code': 'Ship-3',
+    'id': 101,
+    'tag': 'Ship-3',
     'name': '小型观舰仪式',
     'time': 180,
     'time_limit': 360,
@@ -2031,8 +2031,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 102,
-    'code': 'UrgentPart-1:20',
+    'id': 102,
+    'tag': 'UrgentPart-1:20',
     'name': '支援多伦瓦岛',
     'time': 80,
     'time_limit': 300,
@@ -2051,8 +2051,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 103,
-    'code': 'UrgentBook-1:20',
+    'id': 103,
+    'tag': 'UrgentBook-1:20',
     'name': '支援马拉基岛',
     'time': 80,
     'time_limit': 300,
@@ -2071,8 +2071,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 104,
-    'code': 'UrgentDrill-1:30',
+    'id': 104,
+    'tag': 'UrgentDrill-1:30',
     'name': '保卫运输部队Ⅱ',
     'time': 90,
     'time_limit': 200,
@@ -2091,8 +2091,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 105,
-    'code': 'UrgentCube-2:15',
+    'id': 105,
+    'tag': 'UrgentCube-2:15',
     'name': '解救商船Ⅱ',
     'time': 140,
     'time_limit': 200,
@@ -2111,8 +2111,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 106,
-    'code': 'UrgentBox-3',
+    'id': 106,
+    'tag': 'UrgentBox-3',
     'name': 'BIW物资交接',
     'time': 180,
     'time_limit': 680,
@@ -2131,8 +2131,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 107,
-    'code': 'UrgentBox-3',
+    'id': 107,
+    'tag': 'UrgentBox-3',
     'name': 'NYB物资交接',
     'time': 180,
     'time_limit': 680,
@@ -2151,8 +2151,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 108,
-    'code': 'UrgentPart-1:40',
+    'id': 108,
+    'tag': 'UrgentPart-1:40',
     'name': '支援恐班纳',
     'time': 100,
     'time_limit': 300,
@@ -2171,8 +2171,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 109,
-    'code': 'UrgentBook-1:40',
+    'id': 109,
+    'tag': 'UrgentBook-1:40',
     'name': '支援卡波罗岛',
     'time': 100,
     'time_limit': 300,
@@ -2191,8 +2191,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 110,
-    'code': 'UrgentDrill-2',
+    'id': 110,
+    'tag': 'UrgentDrill-2',
     'name': '歼灭敌主力部队',
     'time': 120,
     'time_limit': 680,
@@ -2211,8 +2211,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 111,
-    'code': 'UrgentCube-3',
+    'id': 111,
+    'tag': 'UrgentCube-3',
     'name': '敌袭Ⅱ',
     'time': 180,
     'time_limit': 680,
@@ -2231,8 +2231,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 112,
-    'code': 'Gem-4',
+    'id': 112,
+    'tag': 'Gem-4',
     'name': 'BIW度假护卫',
     'time': 240,
     'time_limit': 540,
@@ -2251,8 +2251,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 113,
-    'code': 'Gem-4',
+    'id': 113,
+    'tag': 'Gem-4',
     'name': 'NYB度假护卫',
     'time': 240,
     'time_limit': 540,
@@ -2271,8 +2271,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 114,
-    'code': 'Ship-6',
+    'id': 114,
+    'tag': 'Ship-6',
     'name': '联合观舰仪式',
     'time': 360,
     'time_limit': 720,
@@ -2291,8 +2291,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 115,
-    'code': 'UrgentPart-2',
+    'id': 115,
+    'tag': 'UrgentPart-2',
     'name': '支援马内岛',
     'time': 120,
     'time_limit': 720,
@@ -2311,8 +2311,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 116,
-    'code': 'UrgentBook-2',
+    'id': 116,
+    'tag': 'UrgentBook-2',
     'name': '支援玛丽岛',
     'time': 120,
     'time_limit': 720,
@@ -2331,8 +2331,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 117,
-    'code': 'UrgentDrill-2:40',
+    'id': 117,
+    'tag': 'UrgentDrill-2:40',
     'name': '保卫运输部队Ⅲ',
     'time': 160,
     'time_limit': 1060,
@@ -2351,8 +2351,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 118,
-    'code': 'UrgentCube-4',
+    'id': 118,
+    'tag': 'UrgentCube-4',
     'name': '解救商船Ⅲ',
     'time': 240,
     'time_limit': 1060,
@@ -2371,8 +2371,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 119,
-    'code': 'UrgentBox-6',
+    'id': 119,
+    'tag': 'UrgentBox-6',
     'name': 'BIW装备研发',
     'time': 360,
     'time_limit': 400,
@@ -2391,8 +2391,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 120,
-    'code': 'UrgentBox-6',
+    'id': 120,
+    'tag': 'UrgentBox-6',
     'name': 'NYB装备研发',
     'time': 360,
     'time_limit': 400,
@@ -2411,8 +2411,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 121,
-    'code': 'UrgentPart-2:30',
+    'id': 121,
+    'tag': 'UrgentPart-2:30',
     'name': '支援萌岛',
     'time': 150,
     'time_limit': 600,
@@ -2431,8 +2431,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 122,
-    'code': 'UrgentBook-2:30',
+    'id': 122,
+    'tag': 'UrgentBook-2:30',
     'name': '支援特林岛',
     'time': 150,
     'time_limit': 720,
@@ -2451,8 +2451,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 123,
-    'code': 'UrgentDrill-4',
+    'id': 123,
+    'tag': 'UrgentDrill-4',
     'name': '歼灭敌精锐部队',
     'time': 240,
     'time_limit': 1060,
@@ -2471,8 +2471,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 124,
-    'code': 'UrgentCube-6',
+    'id': 124,
+    'tag': 'UrgentCube-6',
     'name': '敌袭Ⅲ',
     'time': 360,
     'time_limit': 1060,
@@ -2491,8 +2491,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 125,
-    'code': 'Gem-8',
+    'id': 125,
+    'tag': 'Gem-8',
     'name': 'BIW巡视护卫',
     'time': 480,
     'time_limit': 1080,
@@ -2511,8 +2511,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 126,
-    'code': 'Gem-8',
+    'id': 126,
+    'tag': 'Gem-8',
     'name': 'NYB巡视护卫',
     'time': 480,
     'time_limit': 1080,
@@ -2531,8 +2531,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 urgent_commissions += [{
-    'num': 127,
-    'code': 'Ship-12',
+    'id': 127,
+    'tag': 'Ship-12',
     'name': '同盟观舰仪式',
     'time': 720,
     'time_limit': 1440,
@@ -2551,8 +2551,8 @@ urgent_commissions += [{
     'type': 'Urgent',
 }]
 night_commissions += [{
-    'num': 128,
-    'code': 'NightBook-6',
+    'id': 128,
+    'tag': 'NightBook-6',
     'name': '小型商船护卫',
     'time': 360,
     'time_limit': 360,
@@ -2567,12 +2567,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.0125,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 129,
-    'code': 'NightDrill-6',
+    'id': 129,
+    'tag': 'NightDrill-6',
     'name': '近海防卫巡逻',
     'time': 360,
     'time_limit': 360,
@@ -2587,12 +2587,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.34,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.07,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 130,
-    'code': 'NightCube-6',
+    'id': 130,
+    'tag': 'NightCube-6',
     'name': '舰队初阶演习',
     'time': 360,
     'time_limit': 360,
@@ -2607,12 +2607,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.0375,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 131,
-    'code': 'NightOil-8',
+    'id': 131,
+    'tag': 'NightOil-8',
     'name': '大型油田开发I',
     'time': 480,
     'time_limit': 360,
@@ -2627,12 +2627,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.0375,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 132,
-    'code': 'NightBook-7',
+    'id': 132,
+    'tag': 'NightBook-7',
     'name': '中型商船护卫',
     'time': 420,
     'time_limit': 360,
@@ -2647,12 +2647,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.0225,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 133,
-    'code': 'NightDrill-7',
+    'id': 133,
+    'tag': 'NightDrill-7',
     'name': '海域浮标检查作业',
     'time': 420,
     'time_limit': 360,
@@ -2667,12 +2667,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.31,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.1,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 134,
-    'code': 'NightCube-7',
+    'id': 134,
+    'tag': 'NightCube-7',
     'name': '舰队中阶演习',
     'time': 420,
     'time_limit': 360,
@@ -2687,12 +2687,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.125,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 135,
-    'code': 'NightOil-8',
+    'id': 135,
+    'tag': 'NightOil-8',
     'name': '大型油田开发II',
     'time': 480,
     'time_limit': 360,
@@ -2707,12 +2707,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.125,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 136,
-    'code': 'NightBook-8',
+    'id': 136,
+    'tag': 'NightBook-8',
     'name': '大型商船护卫',
     'time': 480,
     'time_limit': 360,
@@ -2727,12 +2727,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.07,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 137,
-    'code': 'NightDrill-8',
+    'id': 137,
+    'tag': 'NightDrill-8',
     'name': '前沿基地防卫巡逻',
     'time': 480,
     'time_limit': 360,
@@ -2747,12 +2747,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.6,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.225,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 138,
-    'code': 'NightCube-8',
+    'id': 138,
+    'tag': 'NightCube-8',
     'name': '舰队高阶演习',
     'time': 480,
     'time_limit': 360,
@@ -2767,12 +2767,12 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.3,
     'type': 'Night',
 }]
 night_commissions += [{
-    'num': 139,
-    'code': 'NightOil-8',
+    'id': 139,
+    'tag': 'NightOil-8',
     'name': '大型油田开发III',
     'time': 480,
     'time_limit': 360,
@@ -2787,7 +2787,7 @@ night_commissions += [{
     'box': 0.0,
     'drill': 0.0,
     'plate': 0.0,
-    'rate': 0.0833,
+    'rate': 0.3,
     'type': 'Night',
 }]
 daily_commission_count = 40

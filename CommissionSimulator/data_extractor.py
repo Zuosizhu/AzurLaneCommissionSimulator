@@ -36,7 +36,7 @@ while True:
     for _ in range(18):
         if dataline[_] == '' or dataline[_] == '\n':
             dataline[_] = 0
-    (num, code, name, time, time_limit, oil_consumed, oil_gain, chip, coin, cube, gem, book, decor_coin, retro, box, drill, plate,
+    (id, tag, name, time, time_limit, oil_consumed, oil_gain, chip, coin, cube, gem, book, decor_coin, retro, box, drill, plate,
      rate) = dataline
     time = round(float(time) * 6)*10
     rate = float(rate)
@@ -44,8 +44,8 @@ while True:
     output_suffix = '}]\n'
     output_data = \
         f"""
-    'num': {num},
-    'code': '{code}',
+    'id': {id},
+    'tag': '{tag}',
     'name': '{name}',
     'time': {time},
     'time_limit': {time_limit},
@@ -63,24 +63,24 @@ while True:
     'rate': {rate},
 """
     output_prefix = ''
-    if 'Daily' in code:
-        daily_commission += [num]
+    if 'Daily' in tag:
+        daily_commission += [id]
         output_prefix = 'daily_commissions += [{'
         output_data += "    'type': 'Daily',\n"
-    if 'Extra' in code:
-        extra_commission += [num]
+    if 'Extra' in tag:
+        extra_commission += [id]
         output_prefix = 'extra_commissions += [{'
         output_data += "    'type': 'Extra',\n"
-    if 'Major' in code:
-        major_commission += [num]
+    if 'Major' in tag:
+        major_commission += [id]
         output_prefix = 'major_commissions += [{'
         output_data += "    'type': 'Major',\n"
-    if 'Urgent' in code or 'Gem' in code or 'Ship' in code:
-        urgent_commission += [num]
+    if 'Urgent' in tag or 'Gem' in tag or 'Ship' in tag:
+        urgent_commission += [id]
         output_prefix = 'urgent_commissions += [{'
         output_data += "    'type': 'Urgent',\n"
-    if 'Night' in code:
-        night_commission += [num]
+    if 'Night' in tag:
+        night_commission += [id]
         output_prefix = 'night_commissions += [{'
         output_data += "    'type': 'Night',\n"
     output = output_prefix + output_data + output_suffix

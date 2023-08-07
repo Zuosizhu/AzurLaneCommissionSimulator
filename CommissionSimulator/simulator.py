@@ -14,7 +14,7 @@ class CommissionEmulator:
     night_commissions_exist = []
     major_commissions_exist = []
     commissions_run = []
-    num_set = []
+    id_set = []
 
     def __init__(self):
         self.daily_commissions = daily_commissions
@@ -62,8 +62,61 @@ class CommissionEmulator:
         self.config = config
         # Load configs
 
+        priority = daily_commission_count + night_commission_count + major_commission_count \
+                    + urgent_commission_count + extra_commission_count + 1
+
+        for _ in self.daily_commissions:
+            _['priority'] = -priority
+        for _ in self.extra_commissions:
+            _['priority'] = -priority
+        for _ in self.urgent_commissions:
+            _['priority'] = -priority
+        for _ in self.night_commissions:
+            _['priority'] = -priority
+        for _ in self.major_commissions:
+            _['priority'] = -priority
+        self.priority_none = -priority
+
+        for commission in self.filter:
+            priority -= 1
+            if 'Daily' in commission:
+                for _ in range(len(self.daily_commissions)):
+                    if commission == self.daily_commissions[_]['tag']:
+                        self.daily_commissions[_]['priority'] = priority
+                continue
+            if 'Night' in commission:
+                for _ in range(len(self.night_commissions)):
+                    if commission == self.night_commissions[_]['tag']:
+                        self.night_commissions[_]['priority'] = priority
+                continue
+            if 'Major' in commission:
+                for _ in range(len(self.major_commissions)):
+                    if commission == self.major_commissions[_]['tag']:
+                        self.major_commissions[_]['priority'] = priority
+                continue
+            if 'Extra' in commission:
+                for _ in range(len(self.extra_commissions)):
+                    if commission == self.extra_commissions[_]['tag']:
+                        self.extra_commissions[_]['priority'] = priority
+                continue
+            if 'Urgent' in commission or 'Gem' in commission or 'Ship' in commission:
+                for _ in range(len(self.urgent_commissions)):
+                    if commission == self.urgent_commissions[_]['tag']:
+                        self.urgent_commissions[_]['priority'] = priority
+                continue
+            if 'shortest' == commission.lower():
+                self.daily_commissions = sorted(daily_commissions, key=lambda _:_['time'])
+                for _ in range(len(self.daily_commissions)):
+                    if daily_commissions[_]['priority'] == self.priority_none:
+                        self.daily_commissions[_]['priority'] = priority
+                        priority -= 1
+                self.daily_commissions = sorted(daily_commissions, key=lambda _:_['id'])
+                priority +=1
+
+
+
     def finish_one(self, commission_to_finish: dict):
-        self.num_set.remove(commission_to_finish['num'])
+        self.id_set.remove(commission_to_finish['id'])
         self.commissions_run.remove(commission_to_finish)
         for _k, _v in commission_to_finish.items():
             if _k in self.resource_tags:
@@ -82,10 +135,10 @@ class CommissionEmulator:
         while True:
             commission_to_add = self.random_commission(commission_list=self.daily_commissions,
                                                        type_count=daily_commission_count)
-            if commission_to_add['num'] in self.num_set:
+            if commission_to_add['id'] in self.id_set:
                 continue
             self.daily_commissions_exist.append(commission_to_add)
-            self.num_set.append(commission_to_add['num'])
+            self.id_set.append(commission_to_add['id'])
             self.daily_done_today_count += 1
             break
 
@@ -93,10 +146,10 @@ class CommissionEmulator:
         while True:
             commission_to_add = self.random_commission(commission_list=self.extra_commissions,
                                                        type_count=extra_commission_count)
-            if commission_to_add['num'] in self.num_set:
+            if commission_to_add['id'] in self.id_set:
                 continue
             self.daily_commissions_exist.append(commission_to_add)
-            self.num_set.append(commission_to_add['num'])
+            self.id_set.append(commission_to_add['id'])
             break
 
     def add_urgent(self):
@@ -106,27 +159,27 @@ class CommissionEmulator:
             # To give up some accuracy to accelerate. A piece of shit.
             commission_to_add = \
                 self.random_commission(commission_list=self.urgent_commissions, type_count=urgent_commission_count)
-            if commission_to_add['num'] in self.num_set:
+            if commission_to_add['id'] in self.id_set:
                 continue
             commission_to_add['expire_time'] = self.timeline + commission_to_add['time_limit']
             self.urgent_commissions_exist.append(commission_to_add)
-            self.num_set.append(commission_to_add['num'])
+            self.id_set.append(commission_to_add['id'])
             break
 
     def add_major(self):
         while True:
             commission_to_add = \
                 self.random_commission(commission_list=self.major_commissions, type_count=major_commission_count)
-            if commission_to_add['num'] in self.num_set:
+            if commission_to_add['id'] in self.id_set:
                 continue
             commission_to_add['expire_time'] = self.timeline + commission_to_add['time_limit']
             self.major_commissions_exist.append(commission_to_add)
-            self.num_set.append(commission_to_add['num'])
+            self.id_set.append(commission_to_add['id'])
             break
 
     def delete_night(self):
         for _ in self.night_commissions_exist:
-            self.num_set.remove(_['num'])
+            self.id_set.remove(_['id'])
         self.night_commissions_exist = []
 
     def fill_night(self):
@@ -134,23 +187,23 @@ class CommissionEmulator:
             while True:
                 commission_to_add = \
                     self.random_commission(commission_list=self.night_commissions, type_count=night_commission_count)
-                if commission_to_add['num'] in self.num_set:
+                if commission_to_add['id'] in self.id_set:
                     continue
                 self.night_commissions_exist.append(commission_to_add)
-                self.num_set.append(commission_to_add['num'])
+                self.id_set.append(commission_to_add['id'])
                 break
 
     def refill_daily(self):
         count = len(self.daily_commissions_exist)
         for _ in self.daily_commissions_exist:
-            self.num_set.remove(_['num'])
+            self.id_set.remove(_['id'])
         self.daily_commissions_exist = []
         for _ in range(count):
             self.add_daily()
 
     def random_commission(self, commission_list: list, type_count: int) -> dict:
         rand = random()
-        _ = int(rand // 0.025)
+        _ = int(rand // (1 / type_count))
         if _ == 0:
             return commission_list[0]
         if _ >= type_count:
@@ -170,54 +223,81 @@ class CommissionEmulator:
         return commission_list[_]
 
     def run_one(self):
-        for filter_commission_code in self.filter:
-            if 'Daily' in filter_commission_code or 'Extra' in filter_commission_code:
-                for commission in self.daily_commissions_exist:
-                    if filter_commission_code == commission['code']:
-                        self.daily_commissions_exist.remove(commission)
-                        commission_to_run = commission
-                        commission_to_run['finish_time'] = self.timeline + commission['time']
-                        self.commissions_run.append(commission_to_run)
-                        return
-            if 'Urgent' in filter_commission_code \
-                    or 'Gem' in filter_commission_code or 'Ship' in filter_commission_code:
-                for commission in self.urgent_commissions_exist:
-                    if filter_commission_code == commission['code']:
-                        self.urgent_commissions_exist.remove(commission)
-                        commission_to_run = commission
-                        commission_to_run['finish_time'] = self.timeline + commission['time']
-                        self.commissions_run.append(commission_to_run)
-                        return
-            if 'Major' in filter_commission_code:
-                for commission in self.major_commissions_exist:
-                    if filter_commission_code == commission['code']:
-                        self.major_commissions_exist.remove(commission)
-                        commission_to_run = commission
-                        commission_to_run['finish_time'] = self.timeline + commission['time']
-                        self.commissions_run.append(commission_to_run)
-                        return
-            if 'Night' in filter_commission_code:
-                for commission in self.night_commissions_exist:
-                    if filter_commission_code == commission['code']:
-                        self.night_commissions_exist.remove(commission)
-                        commission_to_run = commission
-                        commission_to_run['finish_time'] = self.timeline + commission['time']
-                        self.commissions_run.append(commission_to_run)
-                        return
-            if 'shortest' == filter_commission_code.lower():
-                shortest = 1000
-                if len(self.daily_commissions_exist) > 0:
-                    commission_to_run = self.daily_commissions_exist[0]
-                else:
-                    continue
-                for commission in self.daily_commissions_exist:
-                    if commission['time'] < shortest:
-                        shortest = commission['time']
-                        commission_to_run = commission
-                self.daily_commissions_exist.remove(commission_to_run)
-                commission_to_run['finish_time'] = self.timeline + commission_to_run['time']
-                self.commissions_run.append(commission_to_run)
+        # for filter_commission_tag in self.filter:
+        #     if 'Daily' in filter_commission_tag or 'Extra' in filter_commission_tag:
+        #         for commission in self.daily_commissions_exist:
+        #             if filter_commission_tag == commission['tag']:
+        #                 self.daily_commissions_exist.remove(commission)
+        #                 commission_to_run = commission
+        #                 commission_to_run['finish_time'] = self.timeline + commission['time']
+        #                 self.commissions_run.append(commission_to_run)
+        #                 return
+        #     if 'Urgent' in filter_commission_tag \
+        #             or 'Gem' in filter_commission_tag or 'Ship' in filter_commission_tag:
+        #         for commission in self.urgent_commissions_exist:
+        #             if filter_commission_tag == commission['tag']:
+        #                 self.urgent_commissions_exist.remove(commission)
+        #                 commission_to_run = commission
+        #                 commission_to_run['finish_time'] = self.timeline + commission['time']
+        #                 self.commissions_run.append(commission_to_run)
+        #                 return
+        #     if 'Major' in filter_commission_tag:
+        #         for commission in self.major_commissions_exist:
+        #             if filter_commission_tag == commission['tag']:
+        #                 self.major_commissions_exist.remove(commission)
+        #                 commission_to_run = commission
+        #                 commission_to_run['finish_time'] = self.timeline + commission['time']
+        #                 self.commissions_run.append(commission_to_run)
+        #                 return
+        #     if 'Night' in filter_commission_tag:
+        #         for commission in self.night_commissions_exist:
+        #             if filter_commission_tag == commission['tag']:
+        #                 self.night_commissions_exist.remove(commission)
+        #                 commission_to_run = commission
+        #                 commission_to_run['finish_time'] = self.timeline + commission['time']
+        #                 self.commissions_run.append(commission_to_run)
+        #                 return
+
+        all_commissions_exist = self.daily_commissions_exist + self.urgent_commissions_exist + \
+            self.night_commissions_exist + self.major_commissions_exist
+        all_commissions_exist = sorted(all_commissions_exist, key=lambda _:_['priority'], reverse=True)
+
+        if all_commissions_exist[0]['priority'] == self.priority_none:
+            shortest = 1000
+            if len(self.daily_commissions_exist) > 0:
+                commission_to_run = self.daily_commissions_exist[0]
+            else:
                 return
+            for commission in self.daily_commissions_exist:
+                if commission['time'] < shortest:
+                    shortest = commission['time']
+                    commission_to_run = commission
+            self.daily_commissions_exist.remove(commission_to_run)
+            commission_to_run['finish_time'] = self.timeline + commission_to_run['time']
+            self.commissions_run.append(commission_to_run)
+            return
+
+        commission_to_run = all_commissions_exist[0]
+        if commission_to_run['type'] == 'Daily' or commission_to_run['type'] == 'Extra':
+            self.daily_commissions_exist.remove(commission_to_run)
+            commission_to_run['finish_time'] = self.timeline + commission_to_run['time']
+            self.commissions_run.append(commission_to_run)
+            return
+        if commission_to_run['type'] == 'Urgent':
+            self.urgent_commissions_exist.remove(commission_to_run)
+            commission_to_run['finish_time'] = self.timeline + commission_to_run['time']
+            self.commissions_run.append(commission_to_run)
+            return
+        if commission_to_run['type'] == 'Major':
+            self.major_commissions_exist.remove(commission_to_run)
+            commission_to_run['finish_time'] = self.timeline + commission_to_run['time']
+            self.commissions_run.append(commission_to_run)
+            return
+        if commission_to_run['type'] == 'Night':
+            self.night_commissions_exist.remove(commission_to_run)
+            commission_to_run['finish_time'] = self.timeline + commission_to_run['time']
+            self.commissions_run.append(commission_to_run)
+            return
 
     def run_emulate(self):
         hour = 60
@@ -242,7 +322,7 @@ class CommissionEmulator:
             for _ in self.urgent_commissions_exist:
                 if self.timeline > _['expire_time']:
                     self.urgent_commissions_exist.remove(_)
-                    self.num_set.remove(_['num'])
+                    self.id_set.remove(_['id'])
             # Delete the expired urgent commissions in list
 
             for _ in self.commissions_run:
