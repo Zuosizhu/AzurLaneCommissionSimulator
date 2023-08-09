@@ -19,6 +19,7 @@ class CommissionEmulator:
     commissions_run = []
     id_set = []
     commissions_done = []
+    daily_done_count = 0
 
     def __init__(self):
         self.daily_commissions = daily_commissions
@@ -50,6 +51,12 @@ class CommissionEmulator:
         for _ in range(major_commission_count):
             total_rate += major_commissions[_]['rate']
             self.major_commissions[_]['total_rate'] = total_rate
+
+        from copy import deepcopy
+        self.daily_and_extra_commissions = deepcopy(self.extra_commissions)
+        for _ in range(len(self.daily_and_extra_commissions)):
+            self.daily_and_extra_commissions[_]['total_rate'] += daily_commissions[-1]['total_rate']
+        self.daily_and_extra_commissions = self.daily_commissions + self.daily_and_extra_commissions
         # Appearance rate summarization for random commission
 
         # filter_config = open(file='filter.py', mode='r', encoding='utf-8')
@@ -124,19 +131,19 @@ class CommissionEmulator:
         for _k, _v in commission_to_finish.items():
             if _k in self.resource_tags:
                 self.total_income[_k] += _v
-        if commission_to_finish['type'] == 'Daily':
-            self.daily_done_today_count += 1
-            if self.daily_appear_today_count < 10 and self.daily_done_today_count < 7:
+        if commission_to_finish['type'] == 'Daily' or commission_to_finish['type'] == 'Extra':
+            if commission_to_finish['type'] == 'Daily':
+                self.daily_done_today_count += 1
+                # self.daily_done_count += 1
+            # if self.daily_appear_today_count < 10 and self.daily_done_today_count < 7:
+            if self.daily_done_today_count < 7:
                 self.add_daily()
+            elif self.daily_appear_today_count < 10 and self.daily_done_today_count >= 7:
+                self.add_daily_or_extra()
             else:
                 self.add_extra()
         if commission_to_finish['type'] == 'Major':
             self.add_major()
-        if commission_to_finish['type'] == 'Extra':
-            if self.daily_appear_today_count < 10 and self.daily_done_today_count < 7:
-                self.add_daily()
-            else:
-                self.add_extra()
 
     def add_daily(self):
         while True:
@@ -179,8 +186,20 @@ class CommissionEmulator:
                 self.random_commission(commission_list=self.major_commissions, type_count=major_commission_count)
             if commission_to_add['id'] in self.id_set:
                 continue
-            commission_to_add['expire_time'] = self.timeline + commission_to_add['time_limit']
             self.major_commissions_exist.append(commission_to_add)
+            self.id_set.append(commission_to_add['id'])
+            break
+
+    def add_daily_or_extra(self):
+        while True:
+            commission_to_add = \
+                self.random_commission(commission_list=self.daily_and_extra_commissions,
+                                       type_count=daily_commission_count+extra_commission_count)
+            if commission_to_add['id'] in self.id_set:
+                continue
+            if commission_to_add['type'] =='Daily':
+                self.daily_appear_today_count += 1
+            self.daily_commissions_exist.append(commission_to_add)
             self.id_set.append(commission_to_add['id'])
             break
 
@@ -210,11 +229,11 @@ class CommissionEmulator:
 
     def random_commission(self, commission_list: list, type_count: int) -> dict:
         rand = random()
-        _ = int(rand // (1 / type_count))
+        _ = int(rand * type_count)
         if _ == 0 and rand <= commission_list[0]['total_rate']:
             return commission_list[0]
         else:
-            _ = 1
+            _ = max(1, _)
         if _ >= type_count:
             _ = type_count - 1
         if rand > commission_list[type_count - 1]['total_rate']:
@@ -385,6 +404,7 @@ if __name__ == '__main__':
                 item_in_one_line = 1
     if CE.config['print_commission_done']:
         print('\nCommissions done:')
+        # print('Daily commissions done count:', CE.daily_done_count)
         for _ in range(count):
             if CE.commissions_done[_ + 1] == 0:
                 continue
