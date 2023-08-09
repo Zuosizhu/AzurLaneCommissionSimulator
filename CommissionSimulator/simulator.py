@@ -10,6 +10,7 @@ class CommissionEmulator:
     total_income = {}
     resource_tags = ['oil', 'chip', 'coin', 'cube', 'gem', 'book', 'decor_coin', 'retro', 'box', 'drill', 'plate']
     timeline = 0
+    daily_appear_today_count = 0
     daily_done_today_count = 0
     daily_commissions_exist = []
     urgent_commissions_exist = []
@@ -124,14 +125,15 @@ class CommissionEmulator:
             if _k in self.resource_tags:
                 self.total_income[_k] += _v
         if commission_to_finish['type'] == 'Daily':
-            if self.daily_done_today_count < 10:
+            self.daily_done_today_count += 1
+            if self.daily_appear_today_count < 10 and self.daily_done_today_count < 7:
                 self.add_daily()
             else:
                 self.add_extra()
         if commission_to_finish['type'] == 'Major':
             self.add_major()
         if commission_to_finish['type'] == 'Extra':
-            if self.daily_done_today_count < 10:
+            if self.daily_appear_today_count < 10 and self.daily_done_today_count < 7:
                 self.add_daily()
             else:
                 self.add_extra()
@@ -144,7 +146,7 @@ class CommissionEmulator:
                 continue
             self.daily_commissions_exist.append(commission_to_add)
             self.id_set.append(commission_to_add['id'])
-            self.daily_done_today_count += 1
+            self.daily_appear_today_count += 1
             break
 
     def add_extra(self):
@@ -315,6 +317,7 @@ class CommissionEmulator:
         self.timeline = 0
         while self.timeline <= self.config['time'] * day:
             if self.timeline % day == 0:
+                self.daily_appear_today_count = 0
                 self.daily_done_today_count = 0
                 self.refill_daily()
             # If getting to the next day, refill the daily list immediately( which is what Alas does in most situations)
