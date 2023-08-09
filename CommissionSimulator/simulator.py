@@ -362,14 +362,8 @@ if __name__ == '__main__':
     timestamp_2 = time.time()
     print(f'Time: {CE.config["time"]} Days | Drop rate: {CE.config["rate"]}')
     max_len_total = len('%.4f' % round(CE.total_income['oil'], 4))
-    for k, v in CE.total_income.items():
-        k = k.capitalize()
-        t = '%.4f' % round(v, 4)
-        v = '%.4f' % round(v / CE.config['time'], 4)
-        print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((10 - len(v)) * ' ') + v + '/Day' + '     Total:' +
-              (max_len_total + 1 - len(t)) * ' ' + t)
     commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
-    print('Time taken: ', '%.2f' % round(timestamp_2 - timestamp_1, 2), 'Seconds')
+
     if CE.config['print_filter']:
         print('\nFilter:')
         if '' in CE.filter:
@@ -395,3 +389,12 @@ if __name__ == '__main__':
             if CE.commissions_done[_ + 1] == 0:
                 continue
             print('  ' + commissions[_]['name'] + ': ', CE.commissions_done[_ + 1])
+
+    print('\nIncome:')
+    for k, v in CE.total_income.items():
+        k = k.capitalize()
+        t = '%.4f' % round(v, 4)
+        v = '%.4f' % round(v / CE.config['time'], 4)
+        print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((10 - len(v)) * ' ') + v + '/Day' + '     Total:' +
+              (max_len_total + 1 - len(t)) * ' ' + t)
+    print('\nTime taken: ', '%.2f' % round(timestamp_2 - timestamp_1, 2), 'Seconds')
