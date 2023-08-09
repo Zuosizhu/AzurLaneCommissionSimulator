@@ -13,7 +13,7 @@ night_commissions = []
 daily_commissions += [{
     'id': 1,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发I',
+    'name': '日常资源开发I-Drill',
     'time': 60,
     'time_limit': 0,
     'oil': 65.0,
@@ -33,7 +33,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 2,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发I',
+    'name': '日常资源开发I-Cube',
     'time': 60,
     'time_limit': 0,
     'oil': 65.0,
@@ -53,7 +53,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 3,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发I',
+    'name': '日常资源开发I-Book',
     'time': 60,
     'time_limit': 0,
     'oil': 65.0,
@@ -73,7 +73,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 4,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发I',
+    'name': '日常资源开发I-Retro',
     'time': 60,
     'time_limit': 0,
     'oil': 65.0,
@@ -93,7 +93,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 5,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发I',
+    'name': '日常资源开发I-Box',
     'time': 60,
     'time_limit': 0,
     'oil': 65.0,
@@ -113,7 +113,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 6,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发II',
+    'name': '日常资源开发II-Drill',
     'time': 120,
     'time_limit': 0,
     'oil': 135.0,
@@ -133,7 +133,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 7,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发II',
+    'name': '日常资源开发II-Cube',
     'time': 120,
     'time_limit': 0,
     'oil': 135.0,
@@ -153,7 +153,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 8,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发II',
+    'name': '日常资源开发II-Book',
     'time': 120,
     'time_limit': 0,
     'oil': 135.0,
@@ -173,7 +173,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 9,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发II',
+    'name': '日常资源开发II-Retro',
     'time': 120,
     'time_limit': 0,
     'oil': 135.0,
@@ -193,7 +193,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 10,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发II',
+    'name': '日常资源开发II-Box',
     'time': 120,
     'time_limit': 0,
     'oil': 135.0,
@@ -213,7 +213,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 11,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发III',
+    'name': '日常资源开发III-Drill',
     'time': 60,
     'time_limit': 0,
     'oil': 75.0,
@@ -233,7 +233,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 12,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发III',
+    'name': '日常资源开发III-Cube',
     'time': 60,
     'time_limit': 0,
     'oil': 75.0,
@@ -253,7 +253,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 13,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发III',
+    'name': '日常资源开发III-Book',
     'time': 60,
     'time_limit': 0,
     'oil': 75.0,
@@ -273,7 +273,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 14,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发III',
+    'name': '日常资源开发III-Retro',
     'time': 60,
     'time_limit': 0,
     'oil': 75.0,
@@ -293,7 +293,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 15,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发III',
+    'name': '日常资源开发III-Box',
     'time': 60,
     'time_limit': 0,
     'oil': 75.0,
@@ -313,7 +313,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 16,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发IV',
+    'name': '日常资源开发IV-Drill',
     'time': 120,
     'time_limit': 0,
     'oil': 160.0,
@@ -333,7 +333,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 17,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发IV',
+    'name': '日常资源开发IV-Cube',
     'time': 120,
     'time_limit': 0,
     'oil': 160.0,
@@ -353,7 +353,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 18,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发IV',
+    'name': '日常资源开发IV-Book',
     'time': 120,
     'time_limit': 0,
     'oil': 160.0,
@@ -373,7 +373,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 19,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发IV',
+    'name': '日常资源开发IV-Retro',
     'time': 120,
     'time_limit': 0,
     'oil': 160.0,
@@ -393,7 +393,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 20,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发IV',
+    'name': '日常资源开发IV-Box',
     'time': 120,
     'time_limit': 0,
     'oil': 160.0,
@@ -413,7 +413,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 21,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发V',
+    'name': '日常资源开发V-Drill',
     'time': 60,
     'time_limit': 0,
     'oil': 85.0,
@@ -433,7 +433,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 22,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发V',
+    'name': '日常资源开发V-Cube',
     'time': 60,
     'time_limit': 0,
     'oil': 85.0,
@@ -453,7 +453,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 23,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发V',
+    'name': '日常资源开发V-Book',
     'time': 60,
     'time_limit': 0,
     'oil': 85.0,
@@ -473,7 +473,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 24,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发V',
+    'name': '日常资源开发V-Retro',
     'time': 60,
     'time_limit': 0,
     'oil': 85.0,
@@ -493,7 +493,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 25,
     'tag': 'DailyResource-1',
-    'name': '日常资源开发V',
+    'name': '日常资源开发V-Box',
     'time': 60,
     'time_limit': 0,
     'oil': 85.0,
@@ -513,7 +513,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 26,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发VI',
+    'name': '日常资源开发VI-Drill',
     'time': 120,
     'time_limit': 0,
     'oil': 180.0,
@@ -533,7 +533,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 27,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发VI',
+    'name': '日常资源开发VI-Cube',
     'time': 120,
     'time_limit': 0,
     'oil': 180.0,
@@ -553,7 +553,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 28,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发VI',
+    'name': '日常资源开发VI-Book',
     'time': 120,
     'time_limit': 0,
     'oil': 180.0,
@@ -573,7 +573,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 29,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发VI',
+    'name': '日常资源开发VI-Retro',
     'time': 120,
     'time_limit': 0,
     'oil': 180.0,
@@ -593,7 +593,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 30,
     'tag': 'DailyResource-2',
-    'name': '日常资源开发VI',
+    'name': '日常资源开发VI-Box',
     'time': 120,
     'time_limit': 0,
     'oil': 180.0,
@@ -613,7 +613,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 31,
     'tag': 'DailyChip-1',
-    'name': '高阶战术研发I',
+    'name': '高阶战术研发I-Drill',
     'time': 60,
     'time_limit': 0,
     'oil': 65.0,
@@ -633,7 +633,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 32,
     'tag': 'DailyChip-1',
-    'name': '高阶战术研发I',
+    'name': '高阶战术研发I-Cube',
     'time': 60,
     'time_limit': 0,
     'oil': 65.0,
@@ -653,7 +653,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 33,
     'tag': 'DailyChip-1',
-    'name': '高阶战术研发I',
+    'name': '高阶战术研发I-Book',
     'time': 60,
     'time_limit': 0,
     'oil': 0.0,
@@ -673,7 +673,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 34,
     'tag': 'DailyChip-1',
-    'name': '高阶战术研发I',
+    'name': '高阶战术研发I-Retro',
     'time': 60,
     'time_limit': 0,
     'oil': 0.0,
@@ -693,7 +693,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 35,
     'tag': 'DailyChip-1',
-    'name': '高阶战术研发I',
+    'name': '高阶战术研发I-Box',
     'time': 60,
     'time_limit': 0,
     'oil': 0.0,
@@ -713,7 +713,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 36,
     'tag': 'DailyChip-2',
-    'name': '高阶战术研发II',
+    'name': '高阶战术研发II-Drill',
     'time': 120,
     'time_limit': 0,
     'oil': 0.0,
@@ -733,7 +733,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 37,
     'tag': 'DailyChip-2',
-    'name': '高阶战术研发II',
+    'name': '高阶战术研发II-Cube',
     'time': 120,
     'time_limit': 0,
     'oil': 0.0,
@@ -753,7 +753,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 38,
     'tag': 'DailyChip-2',
-    'name': '高阶战术研发II',
+    'name': '高阶战术研发II-Book',
     'time': 120,
     'time_limit': 0,
     'oil': 135.0,
@@ -773,7 +773,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 39,
     'tag': 'DailyChip-2',
-    'name': '高阶战术研发II',
+    'name': '高阶战术研发II-Retro',
     'time': 120,
     'time_limit': 0,
     'oil': 135.0,
@@ -793,7 +793,7 @@ daily_commissions += [{
 daily_commissions += [{
     'id': 40,
     'tag': 'DailyChip-2',
-    'name': '高阶战术研发II',
+    'name': '高阶战术研发II-Box',
     'time': 120,
     'time_limit': 0,
     'oil': 135.0,

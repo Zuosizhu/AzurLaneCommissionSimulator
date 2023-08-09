@@ -364,12 +364,31 @@ if __name__ == '__main__':
         t = '%.4f' % round(v, 4)
         v = '%.4f' % round(v / CE.config['time'], 4)
         print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((10 - len(v)) * ' ') + v + '/Day' + '     Total:' +
-              (max_len_total + 1 - len(t))* ' ' + t)
+              (max_len_total + 1 - len(t)) * ' ' + t)
     commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
     print('Time taken: ', '%.2f' % round(timestamp_2 - timestamp_1, 2), 'Seconds')
+    if CE.config['print_filter']:
+        print('\nFilter:')
+        if '' in CE.filter:
+            CE.filter.remove('')
+        item_in_one_line = 1
+        print('DailyEvent >')
+        for _ in range(len(CE.filter)):
+            if _ == len(CE.filter)-1:
+                if item_in_one_line == 1:
+                    print(CE.filter[_])
+                else:
+                    print('\n' + CE.filter[_])
+                break
+            if item_in_one_line < 5:
+                print(CE.filter[_] + ' > ', end='')
+                item_in_one_line += 1
+            else:
+                print(CE.filter[_] + ' >')
+                item_in_one_line = 1
     if CE.config['print_commission_done']:
-        print('Commissions done:')
+        print('\nCommissions done:')
         for _ in range(count):
-            if CE.commissions_done[_+1] == 0:
+            if CE.commissions_done[_ + 1] == 0:
                 continue
-            print('  ' + commissions[_]['name'] + ': ', CE.commissions_done[_+1])
+            print('  ' + commissions[_]['name'] + ': ', CE.commissions_done[_ + 1])

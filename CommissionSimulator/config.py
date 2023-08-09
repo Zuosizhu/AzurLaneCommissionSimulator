@@ -9,4 +9,5 @@ config = {
     'time': 1000,
     'rate': 0.02,
     'print_commission_done': True,
+    'print_filter': True
 }
