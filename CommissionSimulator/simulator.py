@@ -117,7 +117,10 @@ class CommissionEmulator:
                 priority += 1
 
     def finish_one(self, commission_to_finish: dict):
-        self.id_set.remove(commission_to_finish['id'])
+        if commission_to_finish['type'] == 'Daily':
+            self.id_set.remove((commission_to_finish['id']- 1) // 5)
+        else:
+            self.id_set.remove(commission_to_finish['id'])
         self.commissions_done[commission_to_finish['id']] += 1
         self.commissions_run.remove(commission_to_finish)
         for _k, _v in commission_to_finish.items():
@@ -137,10 +140,10 @@ class CommissionEmulator:
         while True:
             commission_to_add = self.random_commission(commission_list=self.daily_commissions,
                                                        type_count=daily_commission_count)
-            if commission_to_add['id'] in self.id_set:
+            if (commission_to_add['id'] - 1) // 5 in self.id_set:
                 continue
             self.daily_commissions_exist.append(commission_to_add)
-            self.id_set.append(commission_to_add['id'])
+            self.id_set.append((commission_to_add['id'] - 1) // 5)
             self.daily_done_today_count += 1
             break
 
@@ -198,7 +201,10 @@ class CommissionEmulator:
     def refill_daily(self):
         count = len(self.daily_commissions_exist)
         for _ in self.daily_commissions_exist:
-            self.id_set.remove(_['id'])
+            if _['type'] == 'Daily':
+                self.id_set.remove((_['id'] - 1) // 5)
+            else:
+                self.id_set.remove(_['id'])
         self.daily_commissions_exist = []
         for _ in range(count):
             self.add_daily()
