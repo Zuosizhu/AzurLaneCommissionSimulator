@@ -134,7 +134,10 @@ class CommissionEmulator:
         if commission_to_finish['type'] == 'Major':
             self.add_major()
         if commission_to_finish['type'] == 'Extra':
-            self.add_extra()
+            if self.daily_done_today_count < 10:
+                self.add_daily()
+            else:
+                self.add_extra()
 
     def add_daily(self):
         while True:
