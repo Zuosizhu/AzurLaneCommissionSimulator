@@ -1,8 +1,8 @@
-import datetime
+import datetime,re
 
 from data import *
 from random import random
-from config import config
+from config import config, Value
 from filter import filter_config
 
 hour = 60
@@ -460,15 +460,26 @@ if __name__ == '__main__':
         for _ in range(count):
             if CS.commissions_done[_ + 1] == 0:
                 continue
-            print('  ' + commissions[_]['name'] + ': ', CS.commissions_done[_ + 1])
+            print('  ' + commissions[_]['name'] + (20-len(commissions[_]['name'])-
+                                                   len(re.sub(r'[a-zA-Z,-]', '',
+                                                              commissions[_]['name']))//2)*' '
+                  +': ', CS.commissions_done[_ + 1])
 
-    print("\nAverage pool refresh time(Hours): ", sum(CS.refresh_times) / len(CS.refresh_times))
+    print("\nAverage pool refresh time(Hours): ", '%.4f' % round(sum(CS.refresh_times) / len(CS.refresh_times), 4))
 
+    total_value = 0
     print('Income:')
     for k, v in CS.total_income.items():
         k = k.capitalize()
-        t = '%.4f' % round(v, 4)
+        total_value += v*Value[k]
+        t = '%.3f' % round(v, 3)
         v = '%.4f' % round(v / CS.config['time'], 4)
-        print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((10 - len(v)) * ' ') + v + '/Day' + '     Total:' +
+        print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((12 - len(v)) * ' ') + v + '/Day' + '     Total:' +
               (max_len_total + 1 - len(t)) * ' ' + t)
+    k = "Total value"
+    t = '%.3f' % round(total_value,3)
+    v = '%.4f' % round(total_value / CS.config['time'], 4)
+    print(k + (12 - len(k)) * ' ' + ': ' + ((12 - len(v)) * ' ') + v + '/Day' + '     Total:' +
+          (max_len_total + 1 - len(t)) * ' ' + t)
+
     print('\nTime taken: ', '%.2f' % round(timestamp_2 - timestamp_1, 2), 'Seconds')

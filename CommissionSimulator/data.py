@@ -1813,7 +1813,7 @@ urgent_commissions += [{
 urgent_commissions += [{
     'id': 91,
     'tag': 'UrgentDrill-1',
-    'name': '保卫运输部队Ⅰ',
+    'name': '保卫运输部队I',
     'time': 60,
     'time_limit': 180,
     'oil': 30.0,
@@ -1833,7 +1833,7 @@ urgent_commissions += [{
 urgent_commissions += [{
     'id': 92,
     'tag': 'UrgentCube-1:30',
-    'name': '解救商船Ⅰ',
+    'name': '解救商船I',
     'time': 90,
     'time_limit': 180,
     'oil': -5.0,
@@ -1953,7 +1953,7 @@ urgent_commissions += [{
 urgent_commissions += [{
     'id': 98,
     'tag': 'UrgentCube-1:45',
-    'name': '敌袭Ⅰ',
+    'name': '敌袭I',
     'time': 100,
     'time_limit': 140,
     'oil': -10.0,
@@ -2073,7 +2073,7 @@ urgent_commissions += [{
 urgent_commissions += [{
     'id': 104,
     'tag': 'UrgentDrill-1:30',
-    'name': '保卫运输部队Ⅱ',
+    'name': '保卫运输部队II',
     'time': 90,
     'time_limit': 200,
     'oil': 40.0,
@@ -2093,7 +2093,7 @@ urgent_commissions += [{
 urgent_commissions += [{
     'id': 105,
     'tag': 'UrgentCube-2:15',
-    'name': '解救商船Ⅱ',
+    'name': '解救商船II',
     'time': 140,
     'time_limit': 200,
     'oil': -15.0,
@@ -2213,7 +2213,7 @@ urgent_commissions += [{
 urgent_commissions += [{
     'id': 111,
     'tag': 'UrgentCube-3',
-    'name': '敌袭Ⅱ',
+    'name': '敌袭II',
     'time': 180,
     'time_limit': 680,
     'oil': -20.0,
@@ -2333,7 +2333,7 @@ urgent_commissions += [{
 urgent_commissions += [{
     'id': 117,
     'tag': 'UrgentDrill-2:40',
-    'name': '保卫运输部队Ⅲ',
+    'name': '保卫运输部队III',
     'time': 160,
     'time_limit': 1060,
     'oil': 75.0,
@@ -2353,7 +2353,7 @@ urgent_commissions += [{
 urgent_commissions += [{
     'id': 118,
     'tag': 'UrgentCube-4',
-    'name': '解救商船Ⅲ',
+    'name': '解救商船III',
     'time': 240,
     'time_limit': 1060,
     'oil': -25.0,
@@ -2473,7 +2473,7 @@ urgent_commissions += [{
 urgent_commissions += [{
     'id': 124,
     'tag': 'UrgentCube-6',
-    'name': '敌袭Ⅲ',
+    'name': '敌袭III',
     'time': 360,
     'time_limit': 1060,
     'oil': -30.0,
