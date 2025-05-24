@@ -5,8 +5,10 @@ from random import random
 from config import config
 from filter import filter_config
 
+hour = 60
+day = 24 * 60
 
-class CommissionEmulator:
+class CommissionSimulator:
     total_income = {}
     resource_tags = ['oil', 'chip', 'coin', 'cube', 'gem', 'book', 'decor_coin', 'retro', 'box', 'drill', 'plate']
     timeline = 0
@@ -14,6 +16,7 @@ class CommissionEmulator:
     daily_done_today_count = 0
     daily_commissions_exist = []
     urgent_commissions_exist = []
+    urgent_commissions_pool = []
     night_commissions_exist = []
     major_commissions_exist = []
     commissions_run = []
@@ -22,11 +25,15 @@ class CommissionEmulator:
     daily_done_count = 0
 
     def __init__(self):
-        self.daily_commissions = daily_commissions
-        self.extra_commissions = extra_commissions
-        self.urgent_commissions = urgent_commissions
-        self.night_commissions = night_commissions
-        self.major_commissions = major_commissions
+        self.last_refresh = 0
+        self.running_urgent = 0
+        self.daily_commissions = daily_commissions[:]
+        self.extra_commissions = extra_commissions[:]
+        self.urgent_commissions = urgent_commissions[:]
+        self.night_commissions = night_commissions[:]
+        self.major_commissions = major_commissions[:]
+        self.urgent_commissions_pool = urgent_commissions[:]
+        self.urgent_commissions_pool_len = urgent_commission_count
         for _ in self.resource_tags:
             self.total_income[_] = 0
         # Initialize income sum
@@ -56,7 +63,7 @@ class CommissionEmulator:
         self.daily_and_extra_commissions = deepcopy(self.extra_commissions)
         for _ in range(len(self.daily_and_extra_commissions)):
             self.daily_and_extra_commissions[_]['total_rate'] += daily_commissions[-1]['total_rate']
-        self.daily_and_extra_commissions = self.daily_commissions + self.daily_and_extra_commissions
+        self.daily_and_extra_commissions = self.daily_commissions[:] + self.daily_and_extra_commissions[:]
         # Appearance rate summarization for random commission
 
         # filter_config = open(file='filter.py', mode='r', encoding='utf-8')
@@ -131,6 +138,9 @@ class CommissionEmulator:
         for _k, _v in commission_to_finish.items():
             if _k in self.resource_tags:
                 self.total_income[_k] += _v
+        if commission_to_finish['type'] == 'Urgent':
+            self.running_urgent -=1
+            self.try_refresh_urgent_pool()
         if commission_to_finish['type'] == 'Daily' or commission_to_finish['type'] == 'Extra':
             if commission_to_finish['type'] == 'Daily':
                 self.daily_done_today_count += 1
@@ -168,13 +178,35 @@ class CommissionEmulator:
 
     def add_urgent(self):
         while True:
-            if len(self.urgent_commissions_exist) + len(self.commissions_run) >= urgent_commission_count:
+            # if len(self.urgent_commissions_exist) + len(self.commissions_run) >= urgent_commission_count:
+            #     break
+            # To give up some accuracy to accelerate. A piece of shit. Expired
+            if self.urgent_commissions_pool_len == 0:
                 break
-            # To give up some accuracy to accelerate. A piece of shit.
+            urgent_pool_ids = [d.get('id', 0) for d in self.urgent_commissions_pool]
+            _break = True
+            for id in urgent_pool_ids:
+                if id not in self.id_set:
+                    _break = False
+            if _break:
+                break
             commission_to_add = \
-                self.random_commission(commission_list=self.urgent_commissions, type_count=urgent_commission_count)
+                self.random_commission(commission_list=self.urgent_commissions_pool, type_count=self.urgent_commissions_pool_len)
             if commission_to_add['id'] in self.id_set:
                 continue
+            for _ in range(self.urgent_commissions_pool_len):
+                if self.urgent_commissions_pool[_] == commission_to_add:
+                    del self.urgent_commissions_pool[_]
+                    self.urgent_commissions_pool_len -= 1
+                    break
+            total_rate = 0
+            for _ in range(self.urgent_commissions_pool_len):
+                total_rate += self.urgent_commissions_pool[_]['rate']
+                self.urgent_commissions_pool[_]['total_rate'] = total_rate
+            ratio = 1/total_rate if total_rate != 0 else 1
+            for _ in range(self.urgent_commissions_pool_len):
+                self.urgent_commissions_pool[_]['total_rate'] = self.urgent_commissions_pool[_]['total_rate']*ratio
+            # Maintaining urgent pool
             commission_to_add['expire_time'] = self.timeline + commission_to_add['time_limit']
             self.urgent_commissions_exist.append(commission_to_add)
             self.id_set.append(commission_to_add['id'])
@@ -250,6 +282,14 @@ class CommissionEmulator:
                 return commission_list[0]
         return commission_list[_]
 
+
+    def try_refresh_urgent_pool(self):
+        if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 0)\
+                or (self.timeline - self.last_refresh >= day*7):
+            self.urgent_commissions_pool = urgent_commissions[:]
+            self.urgent_commissions_pool_len = urgent_commission_count
+            self.last_refresh = self.timeline
+
     def run_one(self):
         # for filter_commission_tag in self.filter:
         #     if 'Daily' in filter_commission_tag or 'Extra' in filter_commission_tag:
@@ -312,6 +352,7 @@ class CommissionEmulator:
             self.commissions_run.append(commission_to_run)
             return
         if commission_to_run['type'] == 'Urgent':
+            self.running_urgent+=1
             self.urgent_commissions_exist.remove(commission_to_run)
             commission_to_run['finish_time'] = self.timeline + commission_to_run['time']
             self.commissions_run.append(commission_to_run)
@@ -328,8 +369,6 @@ class CommissionEmulator:
             return
 
     def run_emulate(self):
-        hour = 60
-        day = 24 * 60
         self.add_major()
         for _ in range(4):
             self.add_daily()
@@ -352,6 +391,7 @@ class CommissionEmulator:
                 if self.timeline > _['expire_time']:
                     self.urgent_commissions_exist.remove(_)
                     self.id_set.remove(_['id'])
+                    self.try_refresh_urgent_pool()
             # Delete the expired urgent commissions in list
 
             for _ in self.commissions_run:
@@ -374,47 +414,47 @@ class CommissionEmulator:
 if __name__ == '__main__':
     import time
     timestamp_1 = time.time()
-    CE = CommissionEmulator()
-    if CE.config['time'] <= 0 or not 0 <= CE.config['rate'] <= 1:
+    CS = CommissionSimulator()
+    if CS.config['time'] <= 0 or not 0 <= CS.config['rate'] <= 1:
         exit('Illegal config.')
-    CE.run_emulate()
+    CS.run_emulate()
     timestamp_2 = time.time()
-    print(f'Time: {CE.config["time"]} Days | Drop rate: {CE.config["rate"]}')
-    max_len_total = len('%.4f' % round(CE.total_income['oil'], 4))
+    print(f'Time: {CS.config["time"]} Days | Drop rate: {CS.config["rate"]}')
+    max_len_total = len('%.4f' % round(CS.total_income['oil'], 4))
     commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
 
-    if CE.config['print_filter']:
+    if CS.config['print_filter']:
         print('\nFilter:')
-        if '' in CE.filter:
-            CE.filter.remove('')
+        if '' in CS.filter:
+            CS.filter.remove('')
         item_in_one_line = 1
         print('DailyEvent >')
-        for _ in range(len(CE.filter)):
-            if _ == len(CE.filter)-1:
+        for _ in range(len(CS.filter)):
+            if _ == len(CS.filter)-1:
                 if item_in_one_line == 1:
-                    print(CE.filter[_])
+                    print(CS.filter[_])
                 else:
-                    print('\n' + CE.filter[_])
+                    print('\n' + CS.filter[_])
                 break
             if item_in_one_line < 5:
-                print(CE.filter[_] + ' > ', end='')
+                print(CS.filter[_] + ' > ', end='')
                 item_in_one_line += 1
             else:
-                print(CE.filter[_] + ' >')
+                print(CS.filter[_] + ' >')
                 item_in_one_line = 1
-    if CE.config['print_commission_done']:
+    if CS.config['print_commission_done']:
         print('\nCommissions done:')
         # print('Daily commissions done count:', CE.daily_done_count)
         for _ in range(count):
-            if CE.commissions_done[_ + 1] == 0:
+            if CS.commissions_done[_ + 1] == 0:
                 continue
-            print('  ' + commissions[_]['name'] + ': ', CE.commissions_done[_ + 1])
+            print('  ' + commissions[_]['name'] + ': ', CS.commissions_done[_ + 1])
 
     print('\nIncome:')
-    for k, v in CE.total_income.items():
+    for k, v in CS.total_income.items():
         k = k.capitalize()
         t = '%.4f' % round(v, 4)
-        v = '%.4f' % round(v / CE.config['time'], 4)
+        v = '%.4f' % round(v / CS.config['time'], 4)
         print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((10 - len(v)) * ' ') + v + '/Day' + '     Total:' +
               (max_len_total + 1 - len(t)) * ' ' + t)
     print('\nTime taken: ', '%.2f' % round(timestamp_2 - timestamp_1, 2), 'Seconds')
