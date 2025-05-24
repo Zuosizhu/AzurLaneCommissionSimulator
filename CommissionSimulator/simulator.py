@@ -7,8 +7,10 @@ from filter import filter_config
 
 hour = 60
 day = 24 * 60
+week = 7 * 24 * 60
 
 class CommissionSimulator:
+    oil = 1000
     total_income = {}
     resource_tags = ['oil', 'chip', 'coin', 'cube', 'gem', 'book', 'decor_coin', 'retro', 'box', 'drill', 'plate']
     timeline = 0
@@ -25,6 +27,7 @@ class CommissionSimulator:
     daily_done_count = 0
 
     def __init__(self):
+        self.oil_consume_rate = 0
         self.refresh_times = []
         self.last_refresh = 0
         self.running_urgent = 0
@@ -292,6 +295,16 @@ class CommissionSimulator:
             self.refresh_times.append((self.timeline-self.last_refresh)/hour)
             self.last_refresh = self.timeline
 
+    def handle_oil(self):
+        if not self.config['use_oil_limitation']:
+            return False
+        if self.timeline % week == 0:
+            self.oil+=self.config['oil_get_per_week']
+        if self.oil > self.oil_consume_rate:
+            self.oil += self.config['oil_resume_rate'] - self.oil_consume_rate
+        else:
+            self.oil += self.config['oil_resume_rate']
+
     def run_one(self):
         # for filter_commission_tag in self.filter:
         #     if 'Daily' in filter_commission_tag or 'Extra' in filter_commission_tag:
@@ -375,6 +388,7 @@ class CommissionSimulator:
         for _ in range(4):
             self.add_daily()
         self.timeline = 0
+        self.oil_consume_rate = self.config['oil_used_per_round']/self.config['minute_per_round']
         while self.timeline <= self.config['time'] * day:
             if self.timeline % day == 0:
                 self.daily_appear_today_count = 0
@@ -399,11 +413,20 @@ class CommissionSimulator:
             for _ in self.commissions_run:
                 if self.timeline > _['finish_time']:
                     self.finish_one(_)
+                    self.oil += _['oil']
             # Maintaining the running list
 
-            if self.timeline % day <= self.config['farm_time']*hour:
-                rand = random()
-                if rand < self.config['rate']:
+            drop = False
+            if self.config['use_oil_limitation']:
+                self.handle_oil()
+                if self.oil >= 0:
+                    rand = random()
+                    drop = rand < self.config['commission_per_round'] / self.config['minute_per_round']
+            else:
+                if self.timeline % day <= self.config['farm_time']*hour:
+                    rand = random()
+                    drop = rand < self.config['drop_rate']
+            if drop:
                     self.add_urgent()
             # Add urgent commissions to urgent list if success
 
@@ -421,12 +444,22 @@ if __name__ == '__main__':
     import time
     timestamp_1 = time.time()
     CS = CommissionSimulator()
-    if CS.config['time'] <= 0 or not 0 <= CS.config['rate'] <= 1:
+    if CS.config['time'] <= 0 or not 0 <= CS.config['drop_rate'] <= 1:
         exit('Illegal config.')
 
-    print(f'Time(Days):           {CS.config["time"]}\n'
-          f'Drop rate per minute: {CS.config["rate"]}\n'
-          f'Farm hours per Day:   {CS.config["farm_time"]}')
+    print(  f'Time(Days)           : {CS.config["time"]}')
+    if CS.config['use_oil_limitation']:
+        print(
+            f"Oil resume rate      : {CS.config['oil_resume_rate']}\n"
+            f"Oil get per week     : {CS.config['oil_get_per_week']}\n"
+            f"Oil used per round   : {CS.config['oil_used_per_round']}\n"
+            f"Minutes per round    : {CS.config['minute_per_round']}\n"
+            f"Commission per round : {CS.config['commission_per_round']}\n"
+        )
+    else:
+        print(
+            f'Drop rate per minute : {CS.config["drop_rate"]}\n'
+            f'Farm hours per Day   : {CS.config["farm_time"]}')
 
     if CS.config['print_filter']:
         print('\nFilter:')
