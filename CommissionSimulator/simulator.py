@@ -13,9 +13,6 @@ class CommissionSimulator:
     oil = 1000
     total_income = {}
     resource_tags = ['oil', 'chip', 'coin', 'cube', 'gem', 'book', 'decor_coin', 'retro', 'box', 'drill', 'plate']
-    timeline = 0
-    daily_appear_today_count = 0
-    daily_done_today_count = 0
     daily_commissions_exist = []
     urgent_commissions_exist = []
     urgent_commissions_pool = []
@@ -24,9 +21,16 @@ class CommissionSimulator:
     commissions_run = []
     id_set = []
     commissions_done = []
-    daily_done_count = 0
 
     def __init__(self):
+        self.timeline = 0
+        self.daily_appear_today_count = 0
+        self.daily_done_today_count = 0
+        self.daily_done_count = 0
+        self.urgent_done_count = 0
+        self.extra_done_count = 0
+        self.night_done_count = 0
+        self.major_done_count = 0
         self.oil_consume_rate = 0
         self.refresh_times = []
         self.last_refresh = 0
@@ -145,10 +149,13 @@ class CommissionSimulator:
         if commission_to_finish['type'] == 'Urgent':
             self.running_urgent -=1
             self.try_refresh_urgent_pool()
+            self.urgent_done_count +=1
         if commission_to_finish['type'] == 'Daily' or commission_to_finish['type'] == 'Extra':
             if commission_to_finish['type'] == 'Daily':
                 self.daily_done_today_count += 1
-                # self.daily_done_count += 1
+                self.daily_done_count += 1
+            else:
+                self.extra_done_count += 1
             # if self.daily_appear_today_count < 10 and self.daily_done_today_count < 7:
             if self.daily_done_today_count < 7:
                 self.add_daily()
@@ -158,6 +165,9 @@ class CommissionSimulator:
                 self.add_extra()
         if commission_to_finish['type'] == 'Major':
             self.add_major()
+            self.major_done_count += 1
+        if commission_to_finish['type'] == 'Night':
+            self.night_done_count += 1
 
     def add_daily(self):
         while True:
@@ -288,7 +298,7 @@ class CommissionSimulator:
 
 
     def try_refresh_urgent_pool(self):
-        if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 2)\
+        if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 0)\
                 or (self.timeline - self.last_refresh >= day*7):
             self.urgent_commissions_pool = urgent_commissions[:]
             self.urgent_commissions_pool_len = urgent_commission_count
@@ -496,6 +506,13 @@ class CommissionSimulator:
                                                        len(re.sub(r'[a-zA-Z,-]', '',
                                                                   commissions[_]['name']))//2)*' '
                       +': ', self.commissions_done[_ + 1])
+            max_len_done = len(str(self.urgent_done_count+self.daily_done_count+self.night_done_count+self.major_done_count))
+            print(f'Total  done: {self.urgent_done_count+self.daily_done_count+self.night_done_count+self.major_done_count}')
+            print(f'Daily  done: {(max_len_done-len(str(self.daily_done_count)))*" "}{self.daily_done_count}')
+            print(f'Night  done: {(max_len_done-len(str(self.night_done_count)))*" "}{self.night_done_count}')
+            print(f'Urgent done: {(max_len_done-len(str(self.urgent_done_count)))*" "}{self.urgent_done_count}')
+            if self.major_done_count:
+                print(f'Major done:{self.major_done_count}')
 
         print("\nAverage pool refresh time(Hours): ", '%.4f' % round(sum(self.refresh_times) / len(self.refresh_times), 4))
 
