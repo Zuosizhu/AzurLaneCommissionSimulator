@@ -25,6 +25,7 @@ class CommissionSimulator:
     daily_done_count = 0
 
     def __init__(self):
+        self.refresh_times = []
         self.last_refresh = 0
         self.running_urgent = 0
         self.daily_commissions = daily_commissions[:]
@@ -284,10 +285,11 @@ class CommissionSimulator:
 
 
     def try_refresh_urgent_pool(self):
-        if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 0)\
+        if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 2)\
                 or (self.timeline - self.last_refresh >= day*7):
             self.urgent_commissions_pool = urgent_commissions[:]
             self.urgent_commissions_pool_len = urgent_commission_count
+            self.refresh_times.append((self.timeline-self.last_refresh)/hour)
             self.last_refresh = self.timeline
 
     def run_one(self):
@@ -368,7 +370,7 @@ class CommissionSimulator:
             self.commissions_run.append(commission_to_run)
             return
 
-    def run_emulate(self):
+    def run_simulate(self):
         self.add_major()
         for _ in range(4):
             self.add_daily()
@@ -398,14 +400,18 @@ class CommissionSimulator:
                 if self.timeline > _['finish_time']:
                     self.finish_one(_)
             # Maintaining the running list
-            rand = random()
-            if rand < self.config['rate']:
-                self.add_urgent()
+
+            if self.timeline % day <= self.config['farm_time']*hour:
+                rand = random()
+                if rand < self.config['rate']:
+                    self.add_urgent()
             # Add urgent commissions to urgent list if success
+
             trial = 0
             while len(self.commissions_run) < 4 and trial <= 4:
                 self.run_one()
                 trial += 1
+            # Select commission to run
 
             self.timeline += 1
             # Time changed
@@ -417,11 +423,10 @@ if __name__ == '__main__':
     CS = CommissionSimulator()
     if CS.config['time'] <= 0 or not 0 <= CS.config['rate'] <= 1:
         exit('Illegal config.')
-    CS.run_emulate()
-    timestamp_2 = time.time()
-    print(f'Time: {CS.config["time"]} Days | Drop rate: {CS.config["rate"]}')
-    max_len_total = len('%.4f' % round(CS.total_income['oil'], 4))
-    commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
+
+    print(f'Time(Days):           {CS.config["time"]}\n'
+          f'Drop rate per minute: {CS.config["rate"]}\n'
+          f'Farm hours per Day:   {CS.config["farm_time"]}')
 
     if CS.config['print_filter']:
         print('\nFilter:')
@@ -442,6 +447,13 @@ if __name__ == '__main__':
             else:
                 print(CS.filter[_] + ' >')
                 item_in_one_line = 1
+
+    CS.run_simulate()
+
+    timestamp_2 = time.time()
+    max_len_total = len('%.4f' % round(CS.total_income['oil'], 4))
+    commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
+
     if CS.config['print_commission_done']:
         print('\nCommissions done:')
         # print('Daily commissions done count:', CE.daily_done_count)
@@ -450,7 +462,9 @@ if __name__ == '__main__':
                 continue
             print('  ' + commissions[_]['name'] + ': ', CS.commissions_done[_ + 1])
 
-    print('\nIncome:')
+    print("\nAverage pool refresh time(Hours): ", sum(CS.refresh_times) / len(CS.refresh_times))
+
+    print('Income:')
     for k, v in CS.total_income.items():
         k = k.capitalize()
         t = '%.4f' % round(v, 4)
