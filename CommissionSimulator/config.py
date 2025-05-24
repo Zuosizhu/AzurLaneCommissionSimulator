@@ -37,3 +37,8 @@ Value = {
     "Drill" : 0,
     "Plate" : 0,
 }
+
+if __name__ == '__main__':
+    from simulator import CommissionSimulator
+    CS = CommissionSimulator()
+    CS.run()

@@ -383,7 +383,7 @@ class CommissionSimulator:
             self.commissions_run.append(commission_to_run)
             return
 
-    def run_simulate(self):
+    def start_simulate(self):
         self.add_major()
         for _ in range(4):
             self.add_daily()
@@ -440,79 +440,82 @@ class CommissionSimulator:
             # Time changed
 
 
-if __name__ == '__main__':
-    import time
-    timestamp_1 = time.time()
-    CS = CommissionSimulator()
-    if CS.config['time'] <= 0 or not 0 <= CS.config['drop_rate'] <= 1:
-        exit('Illegal config.')
+    def run(self):
+        import time
+        timestamp_1 = time.time()
+        if self.config['time'] <= 0 or not 0 <= self.config['drop_rate'] <= 1:
+            exit('Illegal config.')
 
-    print(  f'Time(Days)           : {CS.config["time"]}')
-    if CS.config['use_oil_limitation']:
-        print(
-            f"Oil resume rate      : {CS.config['oil_resume_rate']}\n"
-            f"Oil get per week     : {CS.config['oil_get_per_week']}\n"
-            f"Oil used per round   : {CS.config['oil_used_per_round']}\n"
-            f"Minutes per round    : {CS.config['minute_per_round']}\n"
-            f"Commission per round : {CS.config['commission_per_round']}\n"
-        )
-    else:
-        print(
-            f'Drop rate per minute : {CS.config["drop_rate"]}\n'
-            f'Farm hours per Day   : {CS.config["farm_time"]}')
+        print(  f'Time(Days)           : {self.config["time"]}')
+        if self.config['use_oil_limitation']:
+            print(
+                f"Oil resume rate      : {self.config['oil_resume_rate']}\n"
+                f"Oil get per week     : {self.config['oil_get_per_week']}\n"
+                f"Oil used per round   : {self.config['oil_used_per_round']}\n"
+                f"Minutes per round    : {self.config['minute_per_round']}\n"
+                f"Commission per round : {self.config['commission_per_round']}\n"
+            )
+        else:
+            print(
+                f'Drop rate per minute : {self.config["drop_rate"]}\n'
+                f'Farm hours per Day   : {self.config["farm_time"]}')
 
-    if CS.config['print_filter']:
-        print('\nFilter:')
-        if '' in CS.filter:
-            CS.filter.remove('')
-        item_in_one_line = 1
-        print('DailyEvent >')
-        for _ in range(len(CS.filter)):
-            if _ == len(CS.filter)-1:
-                if item_in_one_line == 1:
-                    print(CS.filter[_])
+        if self.config['print_filter']:
+            print('\nFilter:')
+            if '' in self.filter:
+                self.filter.remove('')
+            item_in_one_line = 1
+            print('DailyEvent >')
+            for _ in range(len(self.filter)):
+                if _ == len(self.filter)-1:
+                    if item_in_one_line == 1:
+                        print(self.filter[_])
+                    else:
+                        print('\n' + self.filter[_])
+                    break
+                if item_in_one_line < 5:
+                    print(self.filter[_] + ' > ', end='')
+                    item_in_one_line += 1
                 else:
-                    print('\n' + CS.filter[_])
-                break
-            if item_in_one_line < 5:
-                print(CS.filter[_] + ' > ', end='')
-                item_in_one_line += 1
-            else:
-                print(CS.filter[_] + ' >')
-                item_in_one_line = 1
+                    print(self.filter[_] + ' >')
+                    item_in_one_line = 1
 
-    CS.run_simulate()
+        self.start_simulate()
 
-    timestamp_2 = time.time()
-    max_len_total = len('%.4f' % round(CS.total_income['oil'], 4))
-    commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
+        timestamp_2 = time.time()
+        max_len_total = len('%.4f' % round(self.total_income['oil'], 4))
+        commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
 
-    if CS.config['print_commission_done']:
-        print('\nCommissions done:')
-        # print('Daily commissions done count:', CE.daily_done_count)
-        for _ in range(count):
-            if CS.commissions_done[_ + 1] == 0:
-                continue
-            print('  ' + commissions[_]['name'] + (20-len(commissions[_]['name'])-
-                                                   len(re.sub(r'[a-zA-Z,-]', '',
-                                                              commissions[_]['name']))//2)*' '
-                  +': ', CS.commissions_done[_ + 1])
+        if self.config['print_commission_done']:
+            print('\nCommissions done:')
+            # print('Daily commissions done count:', CE.daily_done_count)
+            for _ in range(count):
+                if self.commissions_done[_ + 1] == 0:
+                    continue
+                print('  ' + commissions[_]['name'] + (20-len(commissions[_]['name'])-
+                                                       len(re.sub(r'[a-zA-Z,-]', '',
+                                                                  commissions[_]['name']))//2)*' '
+                      +': ', self.commissions_done[_ + 1])
 
-    print("\nAverage pool refresh time(Hours): ", '%.4f' % round(sum(CS.refresh_times) / len(CS.refresh_times), 4))
+        print("\nAverage pool refresh time(Hours): ", '%.4f' % round(sum(self.refresh_times) / len(self.refresh_times), 4))
 
-    total_value = 0
-    print('Income:')
-    for k, v in CS.total_income.items():
-        k = k.capitalize()
-        total_value += v*Value[k]
-        t = '%.3f' % round(v, 3)
-        v = '%.4f' % round(v / CS.config['time'], 4)
-        print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((12 - len(v)) * ' ') + v + '/Day' + '     Total:' +
+        total_value = 0
+        print('Income:')
+        for k, v in self.total_income.items():
+            k = k.capitalize()
+            total_value += v*Value[k]
+            t = '%.3f' % round(v, 3)
+            v = '%.4f' % round(v / self.config['time'], 4)
+            print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((12 - len(v)) * ' ') + v + '/Day' + '     Total:' +
+                  (max_len_total + 1 - len(t)) * ' ' + t)
+        k = "Total value"
+        t = '%.3f' % round(total_value,3)
+        v = '%.4f' % round(total_value / self.config['time'], 4)
+        print(k + (12 - len(k)) * ' ' + ': ' + ((12 - len(v)) * ' ') + v + '/Day' + '     Total:' +
               (max_len_total + 1 - len(t)) * ' ' + t)
-    k = "Total value"
-    t = '%.3f' % round(total_value,3)
-    v = '%.4f' % round(total_value / CS.config['time'], 4)
-    print(k + (12 - len(k)) * ' ' + ': ' + ((12 - len(v)) * ' ') + v + '/Day' + '     Total:' +
-          (max_len_total + 1 - len(t)) * ' ' + t)
 
-    print('\nTime taken: ', '%.2f' % round(timestamp_2 - timestamp_1, 2), 'Seconds')
+        print('\nTime taken: ', '%.2f' % round(timestamp_2 - timestamp_1, 2), 'Seconds')
+
+if __name__ == '__main__':
+    CS = CommissionSimulator()
+    CS.run()
