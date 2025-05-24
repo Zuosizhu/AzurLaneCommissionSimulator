@@ -3,10 +3,11 @@ config = {
     time: days to simulate
     drop_rate: urgent commissions appear in 1 minute averagely. (0,03 recommended for 2-4, and 0.05 for A3)
     farm_time: how many hours you will farm in 2-4(or A3) per day.
-    oil_resume_rate: how muc oil is resumed per minute. (1.6 for full upgraded)
-    oil_get_per_week: how muc oil is get per week. (and also count events as spread in this in average, as well as count
-    OperationSiren cost such as 10000/week)(12660 for not buying the Opsi action points, add 1400 for monthly pass，add
-                                            553.8 for season pass, add 1638 for mail, minus 10000 for Opsi action points)
+    oil_resume_rate: how much oil is resumed per minute. (1.6 for full upgraded)
+    oil_get_per_week: how much oil is get per week. (and also count events as spread in this in average, as well as count
+    OperationSiren(which is called OpSi in Alas) cost such as 10000/week)
+        (12660 for not buying the OpSi action points, add 1400 for monthly pass，add 553.8 for season pass, add 1638 for
+        collecting mail, minus 10000 for OpSi action points)
 }
 """
 
@@ -24,6 +25,11 @@ config = {
     'print_filter': False
 }
 
+"""
+Value means how much oil you consider the recourses as. Balanced setting is provided. You can find more settings in the 
+excel file in this repo.
+"""
+
 Value = {
     "Oil" : 1,
     "Chip" : 87.10801394,
@@ -37,6 +43,8 @@ Value = {
     "Drill" : 0,
     "Plate" : 0,
 }
+
+# Yes, you can run simulator here in IDE, as it seems ridiculous in a config file. BUT I LOVE IT!!!
 
 if __name__ == '__main__':
     from simulator import CommissionSimulator
