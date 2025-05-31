@@ -8,6 +8,7 @@ extra_commissions = []
 major_commissions = []
 urgent_commissions = []
 night_commissions = []
+urgent_commission_set = []
 
 
 daily_commissions += [{
@@ -1770,7 +1771,7 @@ major_commissions += [{
     'rate': 0.0556,
     'type': 'Major',
 }]
-urgent_commissions += [{
+urgent_commissions += 22*[{
     'id': 89,
     'tag': 'UrgentBook-0:30',
     'name': '支援土豪尔岛',
@@ -1790,7 +1791,27 @@ urgent_commissions += [{
     'rate': 0.0667,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 89,
+    'tag': 'UrgentBook-0:30',
+    'name': '支援土豪尔岛',
+    'time': 30,
+    'time_limit': 120,
+    'oil': -5.0,
+    'chip': 0.0,
+    'coin': 65.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.6,
+    'decor_coin': 1.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.0667,
+    'type': 'Urgent',
+}]
+urgent_commissions += 22*[{
     'id': 90,
     'tag': 'UrgentPart-0:30',
     'name': '支援维拉维拉岛',
@@ -1810,7 +1831,27 @@ urgent_commissions += [{
     'rate': 0.0667,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 90,
+    'tag': 'UrgentPart-0:30',
+    'name': '支援维拉维拉岛',
+    'time': 30,
+    'time_limit': 120,
+    'oil': -5.0,
+    'chip': 0.0,
+    'coin': 65.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 1.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.33,
+    'rate': 0.0667,
+    'type': 'Urgent',
+}]
+urgent_commissions += 22*[{
     'id': 91,
     'tag': 'UrgentDrill-1',
     'name': '保卫运输部队I',
@@ -1830,7 +1871,27 @@ urgent_commissions += [{
     'rate': 0.0667,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 91,
+    'tag': 'UrgentDrill-1',
+    'name': '保卫运输部队I',
+    'time': 60,
+    'time_limit': 180,
+    'oil': 30.0,
+    'chip': 0.0,
+    'coin': 65.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.66,
+    'plate': 0.0,
+    'rate': 0.0667,
+    'type': 'Urgent',
+}]
+urgent_commissions += 20*[{
     'id': 92,
     'tag': 'UrgentCube-1:30',
     'name': '解救商船I',
@@ -1850,7 +1911,27 @@ urgent_commissions += [{
     'rate': 0.06,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 92,
+    'tag': 'UrgentCube-1:30',
+    'name': '解救商船I',
+    'time': 90,
+    'time_limit': 180,
+    'oil': -5.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.66,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.06,
+    'type': 'Urgent',
+}]
+urgent_commissions += 20*[{
     'id': 93,
     'tag': 'UrgentBox-1',
     'name': 'BIW装备运输',
@@ -1870,7 +1951,27 @@ urgent_commissions += [{
     'rate': 0.06,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 93,
+    'tag': 'UrgentBox-1',
+    'name': 'BIW装备运输',
+    'time': 60,
+    'time_limit': 320,
+    'oil': 60.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 3.0,
+    'retro': 0.0,
+    'box': 1.65,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.06,
+    'type': 'Urgent',
+}]
+urgent_commissions += 20*[{
     'id': 94,
     'tag': 'UrgentBox-1',
     'name': 'NYB装备运输',
@@ -1890,7 +1991,27 @@ urgent_commissions += [{
     'rate': 0.06,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 94,
+    'tag': 'UrgentBox-1',
+    'name': 'NYB装备运输',
+    'time': 60,
+    'time_limit': 320,
+    'oil': 60.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 3.0,
+    'retro': 0.0,
+    'box': 1.65,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.06,
+    'type': 'Urgent',
+}]
+urgent_commissions += 11*[{
     'id': 95,
     'tag': 'UrgentPart-1',
     'name': '支援“伊”岛',
@@ -1910,7 +2031,27 @@ urgent_commissions += [{
     'rate': 0.0333,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 95,
+    'tag': 'UrgentPart-1',
+    'name': '支援“伊”岛',
+    'time': 60,
+    'time_limit': 120,
+    'oil': -10.0,
+    'chip': 0.0,
+    'coin': 135.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 3.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.33,
+    'rate': 0.0333,
+    'type': 'Urgent',
+}]
+urgent_commissions += 11*[{
     'id': 96,
     'tag': 'UrgentBook-1',
     'name': '支援姆波罗岛',
@@ -1930,7 +2071,27 @@ urgent_commissions += [{
     'rate': 0.0333,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 96,
+    'tag': 'UrgentBook-1',
+    'name': '支援姆波罗岛',
+    'time': 60,
+    'time_limit': 120,
+    'oil': -10.0,
+    'chip': 0.0,
+    'coin': 135.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.6,
+    'decor_coin': 3.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.0333,
+    'type': 'Urgent',
+}]
+urgent_commissions += 11*[{
     'id': 97,
     'tag': 'UrgentDrill-1:10',
     'name': '歼灭敌侦查部队',
@@ -1950,7 +2111,27 @@ urgent_commissions += [{
     'rate': 0.0333,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 97,
+    'tag': 'UrgentDrill-1:10',
+    'name': '歼灭敌侦查部队',
+    'time': 70,
+    'time_limit': 140,
+    'oil': 30.0,
+    'chip': 0.0,
+    'coin': 75.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.66,
+    'plate': 0.0,
+    'rate': 0.0333,
+    'type': 'Urgent',
+}]
+urgent_commissions += 10*[{
     'id': 98,
     'tag': 'UrgentCube-1:45',
     'name': '敌袭I',
@@ -1970,7 +2151,27 @@ urgent_commissions += [{
     'rate': 0.03,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 98,
+    'tag': 'UrgentCube-1:45',
+    'name': '敌袭I',
+    'time': 100,
+    'time_limit': 140,
+    'oil': -10.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.66,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.03,
+    'type': 'Urgent',
+}]
+urgent_commissions += 12*[{
     'id': 99,
     'tag': 'Gem-2',
     'name': 'BIW要员护卫',
@@ -1990,7 +2191,27 @@ urgent_commissions += [{
     'rate': 0.036,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 99,
+    'tag': 'Gem-2',
+    'name': 'BIW要员护卫',
+    'time': 120,
+    'time_limit': 320,
+    'oil': 125.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 4.95,
+    'book': 0.0,
+    'decor_coin': 5.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.036,
+    'type': 'Urgent',
+}]
+urgent_commissions += 12*[{
     'id': 100,
     'tag': 'Gem-2',
     'name': 'NYB要员护卫',
@@ -2010,7 +2231,27 @@ urgent_commissions += [{
     'rate': 0.036,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 100,
+    'tag': 'Gem-2',
+    'name': 'NYB要员护卫',
+    'time': 120,
+    'time_limit': 320,
+    'oil': 125.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 4.95,
+    'book': 0.0,
+    'decor_coin': 5.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.036,
+    'type': 'Urgent',
+}]
+urgent_commissions += 6*[{
     'id': 101,
     'tag': 'Ship-3',
     'name': '小型观舰仪式',
@@ -2030,7 +2271,27 @@ urgent_commissions += [{
     'rate': 0.018,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 101,
+    'tag': 'Ship-3',
+    'name': '小型观舰仪式',
+    'time': 180,
+    'time_limit': 360,
+    'oil': -30.0,
+    'chip': 0.0,
+    'coin': 473.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 8.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.018,
+    'type': 'Urgent',
+}]
+urgent_commissions += 11*[{
     'id': 102,
     'tag': 'UrgentPart-1:20',
     'name': '支援多伦瓦岛',
@@ -2050,7 +2311,27 @@ urgent_commissions += [{
     'rate': 0.0333,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 102,
+    'tag': 'UrgentPart-1:20',
+    'name': '支援多伦瓦岛',
+    'time': 80,
+    'time_limit': 300,
+    'oil': -15.0,
+    'chip': 0.0,
+    'coin': 185.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 4.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.66,
+    'rate': 0.0333,
+    'type': 'Urgent',
+}]
+urgent_commissions += 11*[{
     'id': 103,
     'tag': 'UrgentBook-1:20',
     'name': '支援马拉基岛',
@@ -2070,7 +2351,27 @@ urgent_commissions += [{
     'rate': 0.0333,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 103,
+    'tag': 'UrgentBook-1:20',
+    'name': '支援马拉基岛',
+    'time': 80,
+    'time_limit': 300,
+    'oil': -15.0,
+    'chip': 0.0,
+    'coin': 185.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 1.98,
+    'decor_coin': 4.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.0333,
+    'type': 'Urgent',
+}]
+urgent_commissions += 11*[{
     'id': 104,
     'tag': 'UrgentDrill-1:30',
     'name': '保卫运输部队II',
@@ -2090,7 +2391,27 @@ urgent_commissions += [{
     'rate': 0.0333,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 104,
+    'tag': 'UrgentDrill-1:30',
+    'name': '保卫运输部队II',
+    'time': 90,
+    'time_limit': 200,
+    'oil': 40.0,
+    'chip': 0.0,
+    'coin': 205.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.66,
+    'plate': 0.0,
+    'rate': 0.0333,
+    'type': 'Urgent',
+}]
+urgent_commissions += 10*[{
     'id': 105,
     'tag': 'UrgentCube-2:15',
     'name': '解救商船II',
@@ -2110,7 +2431,27 @@ urgent_commissions += [{
     'rate': 0.03,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 105,
+    'tag': 'UrgentCube-2:15',
+    'name': '解救商船II',
+    'time': 140,
+    'time_limit': 200,
+    'oil': -15.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.66,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.03,
+    'type': 'Urgent',
+}]
+urgent_commissions += 10*[{
     'id': 106,
     'tag': 'UrgentBox-3',
     'name': 'BIW物资交接',
@@ -2130,7 +2471,27 @@ urgent_commissions += [{
     'rate': 0.03,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 106,
+    'tag': 'UrgentBox-3',
+    'name': 'BIW物资交接',
+    'time': 180,
+    'time_limit': 680,
+    'oil': 195.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 8.5,
+    'retro': 0.0,
+    'box': 8.25,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.03,
+    'type': 'Urgent',
+}]
+urgent_commissions += 10*[{
     'id': 107,
     'tag': 'UrgentBox-3',
     'name': 'NYB物资交接',
@@ -2150,7 +2511,27 @@ urgent_commissions += [{
     'rate': 0.03,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 107,
+    'tag': 'UrgentBox-3',
+    'name': 'NYB物资交接',
+    'time': 180,
+    'time_limit': 680,
+    'oil': 195.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 8.5,
+    'retro': 0.0,
+    'box': 8.25,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.03,
+    'type': 'Urgent',
+}]
+urgent_commissions += 6*[{
     'id': 108,
     'tag': 'UrgentPart-1:40',
     'name': '支援恐班纳',
@@ -2170,7 +2551,27 @@ urgent_commissions += [{
     'rate': 0.0167,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 108,
+    'tag': 'UrgentPart-1:40',
+    'name': '支援恐班纳',
+    'time': 100,
+    'time_limit': 300,
+    'oil': -20.0,
+    'chip': 0.0,
+    'coin': 230.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 5.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.66,
+    'rate': 0.0167,
+    'type': 'Urgent',
+}]
+urgent_commissions += 6*[{
     'id': 109,
     'tag': 'UrgentBook-1:40',
     'name': '支援卡波罗岛',
@@ -2190,7 +2591,27 @@ urgent_commissions += [{
     'rate': 0.0167,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 109,
+    'tag': 'UrgentBook-1:40',
+    'name': '支援卡波罗岛',
+    'time': 100,
+    'time_limit': 300,
+    'oil': -20.0,
+    'chip': 0.0,
+    'coin': 230.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 1.98,
+    'decor_coin': 5.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.0167,
+    'type': 'Urgent',
+}]
+urgent_commissions += 6*[{
     'id': 110,
     'tag': 'UrgentDrill-2',
     'name': '歼灭敌主力部队',
@@ -2210,7 +2631,27 @@ urgent_commissions += [{
     'rate': 0.0167,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 110,
+    'tag': 'UrgentDrill-2',
+    'name': '歼灭敌主力部队',
+    'time': 120,
+    'time_limit': 680,
+    'oil': 55.0,
+    'chip': 0.0,
+    'coin': 140.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.99,
+    'plate': 0.0,
+    'rate': 0.0167,
+    'type': 'Urgent',
+}]
+urgent_commissions += 5*[{
     'id': 111,
     'tag': 'UrgentCube-3',
     'name': '敌袭II',
@@ -2230,7 +2671,27 @@ urgent_commissions += [{
     'rate': 0.015,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 111,
+    'tag': 'UrgentCube-3',
+    'name': '敌袭II',
+    'time': 180,
+    'time_limit': 680,
+    'oil': -20.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.99,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.015,
+    'type': 'Urgent',
+}]
+urgent_commissions += 6*[{
     'id': 112,
     'tag': 'Gem-4',
     'name': 'BIW度假护卫',
@@ -2250,7 +2711,27 @@ urgent_commissions += [{
     'rate': 0.018,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 112,
+    'tag': 'Gem-4',
+    'name': 'BIW度假护卫',
+    'time': 240,
+    'time_limit': 540,
+    'oil': 280.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 9.9,
+    'book': 0.0,
+    'decor_coin': 12.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.018,
+    'type': 'Urgent',
+}]
+urgent_commissions += 6*[{
     'id': 113,
     'tag': 'Gem-4',
     'name': 'NYB度假护卫',
@@ -2270,7 +2751,27 @@ urgent_commissions += [{
     'rate': 0.018,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 113,
+    'tag': 'Gem-4',
+    'name': 'NYB度假护卫',
+    'time': 240,
+    'time_limit': 540,
+    'oil': 280.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 9.9,
+    'book': 0.0,
+    'decor_coin': 12.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.018,
+    'type': 'Urgent',
+}]
+urgent_commissions += 3*[{
     'id': 114,
     'tag': 'Ship-6',
     'name': '联合观舰仪式',
@@ -2290,7 +2791,27 @@ urgent_commissions += [{
     'rate': 0.009,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 114,
+    'tag': 'Ship-6',
+    'name': '联合观舰仪式',
+    'time': 360,
+    'time_limit': 720,
+    'oil': -50.0,
+    'chip': 0.0,
+    'coin': 950.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 17.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.009,
+    'type': 'Urgent',
+}]
+urgent_commissions += 4*[{
     'id': 115,
     'tag': 'UrgentPart-2',
     'name': '支援马内岛',
@@ -2310,7 +2831,27 @@ urgent_commissions += [{
     'rate': 0.0111,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 115,
+    'tag': 'UrgentPart-2',
+    'name': '支援马内岛',
+    'time': 120,
+    'time_limit': 720,
+    'oil': -25.0,
+    'chip': 0.0,
+    'coin': 275.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 6.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 1.32,
+    'rate': 0.0111,
+    'type': 'Urgent',
+}]
+urgent_commissions += 4*[{
     'id': 116,
     'tag': 'UrgentBook-2',
     'name': '支援玛丽岛',
@@ -2330,7 +2871,27 @@ urgent_commissions += [{
     'rate': 0.0111,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 116,
+    'tag': 'UrgentBook-2',
+    'name': '支援玛丽岛',
+    'time': 120,
+    'time_limit': 720,
+    'oil': -25.0,
+    'chip': 0.0,
+    'coin': 275.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 4.8,
+    'decor_coin': 6.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.0111,
+    'type': 'Urgent',
+}]
+urgent_commissions += 4*[{
     'id': 117,
     'tag': 'UrgentDrill-2:40',
     'name': '保卫运输部队III',
@@ -2350,7 +2911,27 @@ urgent_commissions += [{
     'rate': 0.0111,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 117,
+    'tag': 'UrgentDrill-2:40',
+    'name': '保卫运输部队III',
+    'time': 160,
+    'time_limit': 1060,
+    'oil': 75.0,
+    'chip': 0.0,
+    'coin': 185.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.99,
+    'plate': 0.0,
+    'rate': 0.0111,
+    'type': 'Urgent',
+}]
+urgent_commissions += 3*[{
     'id': 118,
     'tag': 'UrgentCube-4',
     'name': '解救商船III',
@@ -2370,7 +2951,27 @@ urgent_commissions += [{
     'rate': 0.01,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 118,
+    'tag': 'UrgentCube-4',
+    'name': '解救商船III',
+    'time': 240,
+    'time_limit': 1060,
+    'oil': -25.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.99,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.01,
+    'type': 'Urgent',
+}]
+urgent_commissions += 3*[{
     'id': 119,
     'tag': 'UrgentBox-6',
     'name': 'BIW装备研发',
@@ -2390,7 +2991,27 @@ urgent_commissions += [{
     'rate': 0.01,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 119,
+    'tag': 'UrgentBox-6',
+    'name': 'BIW装备研发',
+    'time': 360,
+    'time_limit': 400,
+    'oil': 425.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 17.5,
+    'retro': 0.0,
+    'box': 41.25,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.01,
+    'type': 'Urgent',
+}]
+urgent_commissions += 3*[{
     'id': 120,
     'tag': 'UrgentBox-6',
     'name': 'NYB装备研发',
@@ -2410,7 +3031,27 @@ urgent_commissions += [{
     'rate': 0.01,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 120,
+    'tag': 'UrgentBox-6',
+    'name': 'NYB装备研发',
+    'time': 360,
+    'time_limit': 400,
+    'oil': 425.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 17.5,
+    'retro': 0.0,
+    'box': 41.25,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.01,
+    'type': 'Urgent',
+}]
+urgent_commissions += 2*[{
     'id': 121,
     'tag': 'UrgentPart-2:30',
     'name': '支援萌岛',
@@ -2430,7 +3071,27 @@ urgent_commissions += [{
     'rate': 0.0056,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 121,
+    'tag': 'UrgentPart-2:30',
+    'name': '支援萌岛',
+    'time': 150,
+    'time_limit': 600,
+    'oil': -30.0,
+    'chip': 0.0,
+    'coin': 345.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 7.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 1.32,
+    'rate': 0.0056,
+    'type': 'Urgent',
+}]
+urgent_commissions += 2*[{
     'id': 122,
     'tag': 'UrgentBook-2:30',
     'name': '支援特林岛',
@@ -2450,7 +3111,27 @@ urgent_commissions += [{
     'rate': 0.0056,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 122,
+    'tag': 'UrgentBook-2:30',
+    'name': '支援特林岛',
+    'time': 150,
+    'time_limit': 720,
+    'oil': -30.0,
+    'chip': 0.0,
+    'coin': 345.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 4.8,
+    'decor_coin': 7.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.0056,
+    'type': 'Urgent',
+}]
+urgent_commissions += 2*[{
     'id': 123,
     'tag': 'UrgentDrill-4',
     'name': '歼灭敌精锐部队',
@@ -2470,7 +3151,27 @@ urgent_commissions += [{
     'rate': 0.0056,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 123,
+    'tag': 'UrgentDrill-4',
+    'name': '歼灭敌精锐部队',
+    'time': 240,
+    'time_limit': 1060,
+    'oil': 120.0,
+    'chip': 0.0,
+    'coin': 280.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 1.2,
+    'plate': 0.0,
+    'rate': 0.0056,
+    'type': 'Urgent',
+}]
+urgent_commissions += 2*[{
     'id': 124,
     'tag': 'UrgentCube-6',
     'name': '敌袭III',
@@ -2490,7 +3191,27 @@ urgent_commissions += [{
     'rate': 0.005,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 124,
+    'tag': 'UrgentCube-6',
+    'name': '敌袭III',
+    'time': 360,
+    'time_limit': 1060,
+    'oil': -30.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 1.32,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 0.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.005,
+    'type': 'Urgent',
+}]
+urgent_commissions += 2*[{
     'id': 125,
     'tag': 'Gem-8',
     'name': 'BIW巡视护卫',
@@ -2510,7 +3231,27 @@ urgent_commissions += [{
     'rate': 0.006,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 125,
+    'tag': 'Gem-8',
+    'name': 'BIW巡视护卫',
+    'time': 480,
+    'time_limit': 1080,
+    'oil': 570.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 19.8,
+    'book': 0.0,
+    'decor_coin': 22.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.006,
+    'type': 'Urgent',
+}]
+urgent_commissions += 2*[{
     'id': 126,
     'tag': 'Gem-8',
     'name': 'NYB巡视护卫',
@@ -2530,7 +3271,47 @@ urgent_commissions += [{
     'rate': 0.006,
     'type': 'Urgent',
 }]
-urgent_commissions += [{
+urgent_commission_set += [{
+    'id': 126,
+    'tag': 'Gem-8',
+    'name': 'NYB巡视护卫',
+    'time': 480,
+    'time_limit': 1080,
+    'oil': 570.0,
+    'chip': 0.0,
+    'coin': 0.0,
+    'cube': 0.0,
+    'gem': 19.8,
+    'book': 0.0,
+    'decor_coin': 22.5,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.006,
+    'type': 'Urgent',
+}]
+urgent_commissions += 1*[{
+    'id': 127,
+    'tag': 'Ship-12',
+    'name': '同盟观舰仪式',
+    'time': 720,
+    'time_limit': 1440,
+    'oil': -70.0,
+    'chip': 0.0,
+    'coin': 1870.0,
+    'cube': 0.0,
+    'gem': 0.0,
+    'book': 0.0,
+    'decor_coin': 35.0,
+    'retro': 0.0,
+    'box': 0.0,
+    'drill': 0.0,
+    'plate': 0.0,
+    'rate': 0.003,
+    'type': 'Urgent',
+}]
+urgent_commission_set += [{
     'id': 127,
     'tag': 'Ship-12',
     'name': '同盟观舰仪式',
@@ -2793,6 +3574,8 @@ night_commissions += [{
 daily_commission_count = 40
 extra_commission_count = 30
 major_commission_count = 18
-urgent_commission_count = 39
+urgent_commission_count = 334
+urgent_commission_set_count = 39
 night_commission_count = 12
 count = 139
+urgent_commission_set = sorted(urgent_commission_set, key=lambda x: int(x['id']))

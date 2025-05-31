@@ -1,7 +1,7 @@
 import datetime,re
 
 from data import *
-from random import random
+from random import random, choice
 from config import config, Value
 from filter import filter_config
 
@@ -54,10 +54,10 @@ class CommissionSimulator:
         for _ in range(extra_commission_count):
             total_rate += extra_commissions[_]['rate']
             self.extra_commissions[_]['total_rate'] = total_rate
-        total_rate = 0
-        for _ in range(urgent_commission_count):
-            total_rate += urgent_commissions[_]['rate']
-            self.urgent_commissions[_]['total_rate'] = total_rate
+        # total_rate = 0
+        # for _ in range(urgent_commission_count):
+        #     total_rate += urgent_commissions[_]['rate']
+        #     self.urgent_commissions[_]['total_rate'] = total_rate
         total_rate = 0
         for _ in range(night_commission_count):
             total_rate += night_commissions[_]['rate']
@@ -199,28 +199,17 @@ class CommissionSimulator:
                 break
             urgent_pool_ids = [d.get('id', 0) for d in self.urgent_commissions_pool]
             _break = True
-            for id in urgent_pool_ids:
+            for id in set(urgent_pool_ids):
                 if id not in self.id_set:
                     _break = False
             if _break:
                 break
             commission_to_add = \
-                self.random_commission(commission_list=self.urgent_commissions_pool, type_count=self.urgent_commissions_pool_len)
+                self.random_urgent(commission_list=self.urgent_commissions_pool, type_count=self.urgent_commissions_pool_len)
             if commission_to_add['id'] in self.id_set:
                 continue
-            for _ in range(self.urgent_commissions_pool_len):
-                if self.urgent_commissions_pool[_] == commission_to_add:
-                    del self.urgent_commissions_pool[_]
-                    self.urgent_commissions_pool_len -= 1
-                    break
-            total_rate = 0
-            for _ in range(self.urgent_commissions_pool_len):
-                total_rate += self.urgent_commissions_pool[_]['rate']
-                self.urgent_commissions_pool[_]['total_rate'] = total_rate
-            ratio = 1/total_rate if total_rate != 0 else 1
-            for _ in range(self.urgent_commissions_pool_len):
-                self.urgent_commissions_pool[_]['total_rate'] = self.urgent_commissions_pool[_]['total_rate']*ratio
-            # Maintaining urgent pool
+            self.urgent_commissions_pool.remove(commission_to_add)
+            self.urgent_commissions_pool_len-=1
             commission_to_add['expire_time'] = self.timeline + commission_to_add['time_limit']
             self.urgent_commissions_exist.append(commission_to_add)
             self.id_set.append(commission_to_add['id'])
@@ -273,6 +262,10 @@ class CommissionSimulator:
         for _ in range(count):
             self.add_daily()
 
+    def random_urgent(self, commission_list: list, type_count: int) -> dict:
+        _ = choice(commission_list)
+        return _
+
     def random_commission(self, commission_list: list, type_count: int) -> dict:
         rand = random()
         _ = int(rand * type_count)
@@ -298,7 +291,7 @@ class CommissionSimulator:
 
 
     def try_refresh_urgent_pool(self):
-        if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 0)\
+        if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 4)\
                 or (self.timeline - self.last_refresh >= day*7):
             self.urgent_commissions_pool = urgent_commissions[:]
             self.urgent_commissions_pool_len = urgent_commission_count
@@ -494,7 +487,7 @@ class CommissionSimulator:
 
         timestamp_2 = time.time()
         max_len_total = len('%.4f' % round(self.total_income['oil'], 4))
-        commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
+        commissions = daily_commissions + extra_commissions + major_commissions + urgent_commission_set + night_commissions
 
         if self.config['print_commission_done']:
             print('\nCommissions done:')
@@ -514,7 +507,8 @@ class CommissionSimulator:
             if self.major_done_count:
                 print(f'Major done:{self.major_done_count}')
 
-        print("\nAverage pool refresh time(Hours): ", '%.4f' % round(sum(self.refresh_times) / len(self.refresh_times), 4))
+        if len(self.refresh_times):
+            print("\nAverage pool refresh time(Hours): ", '%.4f' % round(sum(self.refresh_times) / len(self.refresh_times), 4))
 
         total_value = 0
         print('Income:')
