@@ -17,7 +17,6 @@ extra_commissions = []
 major_commissions = []
 urgent_commissions = []
 night_commissions = []
-urgent_commission_set = []
 
 
 """)
@@ -28,7 +27,6 @@ extra_commission = []
 major_commission = []
 urgent_commission = []
 night_commission = []
-urgent_commission_set = []
 
 while True:
     line = source.readline()
@@ -78,28 +76,25 @@ while True:
         output_prefix = 'major_commissions += [{'
         output_data += "    'type': 'Major',\n"
     if 'Urgent' in tag or 'Gem' in tag or 'Ship' in tag:
-        urgent_commission += round(rate*333)*[id]
-        output_prefix = f'urgent_commissions += {round(rate*333)}*['+'{'
+        urgent_commission += [id]
+        output_prefix = 'urgent_commissions += [{'
         output_data += "    'type': 'Urgent',\n"
+        output_data += f"    'weight': {round(rate*333)},\n"
     if 'Night' in tag:
         night_commission += [id]
         output_prefix = 'night_commissions += [{'
         output_data += "    'type': 'Night',\n"
     output = output_prefix + output_data + output_suffix
     py.write(output)
-    if 'Urgent' in tag or 'Gem' in tag or 'Ship' in tag:
-        urgent_commission_set += [id]
-        output_prefix = 'urgent_commission_set += [{'
-        output = output_prefix + output_data + output_suffix
-        py.write(output)
 py.write(f"""daily_commission_count = {len(daily_commission)}
 extra_commission_count = {len(extra_commission)}
 major_commission_count = {len(major_commission)}
-urgent_commission_count = {len(urgent_commission)}
-urgent_commission_set_count = {len(urgent_commission_set)}
+urgent_commission_set_count = {len(urgent_commission)}
 night_commission_count = {len(night_commission)}
-count = {len(daily_commission)+len(extra_commission)+len(major_commission)+len(urgent_commission_set)+len(night_commission)}
-urgent_commission_set = sorted(urgent_commission_set, key=lambda x: int(x['id']))
+count = {len(daily_commission)+len(extra_commission)+len(major_commission)+len(urgent_commission)+len(night_commission)}
+urgent_commission_count = 0
+for _ in urgent_commissions:
+    urgent_commission_count += _['weight']
 """)
 py.close()
 source.close()

@@ -1,3 +1,4 @@
+from copy import deepcopy
 import datetime,re
 
 from data import *
@@ -40,7 +41,6 @@ class CommissionSimulator:
         self.urgent_commissions = urgent_commissions[:]
         self.night_commissions = night_commissions[:]
         self.major_commissions = major_commissions[:]
-        self.urgent_commissions_pool = urgent_commissions[:]
         self.urgent_commissions_pool_len = urgent_commission_count
         for _ in self.resource_tags:
             self.total_income[_] = 0
@@ -67,7 +67,6 @@ class CommissionSimulator:
             total_rate += major_commissions[_]['rate']
             self.major_commissions[_]['total_rate'] = total_rate
 
-        from copy import deepcopy
         self.daily_and_extra_commissions = deepcopy(self.extra_commissions)
         for _ in range(len(self.daily_and_extra_commissions)):
             self.daily_and_extra_commissions[_]['total_rate'] += daily_commissions[-1]['total_rate']
@@ -139,6 +138,8 @@ class CommissionSimulator:
                 self.daily_commissions = sorted(daily_commissions, key=lambda _: _['id'])
                 priority += 1
 
+        self.urgent_commissions_pool = deepcopy(urgent_commissions)
+
     def finish_one(self, commission_to_finish: dict):
         self.id_set.remove(commission_to_finish['id'])
         self.commissions_done[commission_to_finish['id']] += 1
@@ -208,7 +209,10 @@ class CommissionSimulator:
                 self.random_urgent(commission_list=self.urgent_commissions_pool, type_count=self.urgent_commissions_pool_len)
             if commission_to_add['id'] in self.id_set:
                 continue
-            self.urgent_commissions_pool.remove(commission_to_add)
+            if commission_to_add['weight'] == 1:
+                self.urgent_commissions_pool.remove(commission_to_add)
+            else:
+                commission_to_add['weight'] -= 1
             self.urgent_commissions_pool_len-=1
             commission_to_add['expire_time'] = self.timeline + commission_to_add['time_limit']
             self.urgent_commissions_exist.append(commission_to_add)
@@ -291,9 +295,9 @@ class CommissionSimulator:
 
 
     def try_refresh_urgent_pool(self):
-        if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 4)\
+        if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 0)\
                 or (self.timeline - self.last_refresh >= day*7):
-            self.urgent_commissions_pool = urgent_commissions[:]
+            self.urgent_commissions_pool = deepcopy(urgent_commissions)
             self.urgent_commissions_pool_len = urgent_commission_count
             self.refresh_times.append((self.timeline-self.last_refresh)/hour)
             self.last_refresh = self.timeline
@@ -487,7 +491,7 @@ class CommissionSimulator:
 
         timestamp_2 = time.time()
         max_len_total = len('%.4f' % round(self.total_income['oil'], 4))
-        commissions = daily_commissions + extra_commissions + major_commissions + urgent_commission_set + night_commissions
+        commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
 
         if self.config['print_commission_done']:
             print('\nCommissions done:')
