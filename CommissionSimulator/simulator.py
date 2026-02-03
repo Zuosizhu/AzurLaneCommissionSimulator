@@ -32,9 +32,12 @@ class CommissionSimulator:
         self.night_done_count = 0
         self.major_done_count = 0
         self.oil_consume_rate = 0
+        self.event_pause = False
+        self.event_pause_end = 0
         self.refresh_times = []
         self.last_refresh = 0
         self.running_urgent = 0
+        self.commission_rate_per_minute = 0
         self.daily_commissions = daily_commissions[:]
         self.extra_commissions = extra_commissions[:]
         self.urgent_commissions = urgent_commissions[:]
@@ -306,10 +309,12 @@ class CommissionSimulator:
             self.last_refresh = self.timeline
 
     def handle_oil(self):
-        if not self.config['use_oil_limitation']:
+        if self.event_pause:
             return False
         if self.timeline % week == 0:
             self.oil+=self.config['oil_get_per_week']
+        if self.timeline % day == 0:
+            self.oil-=self.config['oil_other_used_per_day']
         if self.oil > self.oil_consume_rate:
             self.oil += self.config['oil_resume_rate'] - self.oil_consume_rate
         else:
@@ -399,12 +404,25 @@ class CommissionSimulator:
             self.add_daily()
         self.timeline = 0
         self.oil_consume_rate = self.config['oil_used_per_round']/self.config['minute_per_round']
+        self.commission_rate_per_minute = self.config['commission_per_round']/self.config['minute_per_round']
         while self.timeline <= self.config['time'] * day:
             if self.timeline % day == 0:
                 self.daily_appear_today_count = 0
                 self.daily_done_today_count = 0
                 self.refill_daily()
             # If getting to the next day, refill the daily list immediately( which is what Alas does in most situations)
+
+            if self.timeline % (60 * day) == 0:
+                self.event_pause = True
+                self.event_pause_end = self.timeline + self.config['event_pause_days_per_year'] / 6 * day
+                self.commission_rate_per_minute = self.commission_rate_per_minute/7
+
+            if self.timeline == self.event_pause_end:
+                self.event_pause = False
+                self.event_pause_end = 0
+                self.commission_rate_per_minute = self.config['commission_per_round']/self.config['minute_per_round']
+
+            # If in event pause, pause all oil calc and set event time rates
 
             if self.timeline % day == 3 * hour:
                 self.delete_night()
@@ -423,7 +441,8 @@ class CommissionSimulator:
             for _ in self.commissions_run:
                 if self.timeline > _['finish_time']:
                     self.finish_one(_)
-                    self.oil += _['oil']
+                    if not self.event_pause:
+                        self.oil += _['oil']
             # Maintaining the running list
 
             drop = False
@@ -431,7 +450,7 @@ class CommissionSimulator:
                 self.handle_oil()
                 if self.oil >= 0:
                     rand = random()
-                    drop = rand < self.config['commission_per_round'] / self.config['minute_per_round']
+                    drop = rand < self.commission_rate_per_minute
             else:
                 if self.timeline % day <= self.config['farm_time']*hour:
                     rand = random()
@@ -456,14 +475,16 @@ class CommissionSimulator:
         if self.config['time'] <= 0 or not 0 <= self.config['drop_rate'] <= 1:
             exit('Illegal config.')
 
-        print(  f'Time(Days)           : {self.config["time"]}')
+        print(  f'Time(Days)               : {self.config["time"]}')
         if self.config['use_oil_limitation']:
             print(
-                f"Oil resume rate      : {self.config['oil_resume_rate']}\n"
-                f"Oil get per week     : {self.config['oil_get_per_week']}\n"
-                f"Oil used per round   : {self.config['oil_used_per_round']}\n"
-                f"Minutes per round    : {self.config['minute_per_round']}\n"
-                f"Commission per round : {self.config['commission_per_round']}\n"
+                f"Oil resume rate          : {self.config['oil_resume_rate']}\n"
+                f"Oil get per week         : {self.config['oil_get_per_week']}\n"
+                f"oil_other_used_per_day   : {self.config['oil_other_used_per_day']}\n"
+                f"Oil used per round       : {self.config['oil_used_per_round']}\n"
+                f"Minutes per round        : {self.config['minute_per_round']}\n"
+                f"Commission per round     : {self.config['commission_per_round']}\n"
+                f"event_pause_days_per_year: {self.config['event_pause_days_per_year']}\n"
             )
         else:
             print(
