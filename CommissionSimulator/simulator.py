@@ -312,7 +312,8 @@ class CommissionSimulator:
             self.oil+=self.config['oil_get_per_week']
         if self.timeline % day == 0:
             self.oil-=self.config['oil_other_used_per_day']
-        if self.oil > self.oil_consume_rate:
+        # if self.oil > self.oil_consume_rate:
+        if self.oil > 0:
             self.oil += self.config['oil_resume_rate'] - self.oil_consume_rate
         else:
             self.oil += self.config['oil_resume_rate']
