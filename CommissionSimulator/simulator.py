@@ -24,6 +24,7 @@ class CommissionSimulator:
     commissions_done = []
 
     def __init__(self):
+        self.run_shortest = False
         self.last_gem_run_out_time = 0
         self.last_gem_run_times = []
         self.timeline = 0
@@ -136,6 +137,7 @@ class CommissionSimulator:
                         self.urgent_commissions[_]['priority'] = priority
                 continue
             if 'shortest' == commission.lower():
+                self.run_shortest = True
                 self.daily_commissions = sorted(daily_commissions, key=lambda _: _['time'])
                 for _ in range(len(self.daily_commissions)):
                     if daily_commissions[_]['priority'] == self.priority_none:
@@ -312,6 +314,8 @@ class CommissionSimulator:
                 self.last_gem_run_out_time = self.timeline - self.last_refresh
         if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 0)\
                 or (self.timeline - self.last_refresh >= day*7):
+            if not self.last_gem_run_out_time:
+                self.last_gem_run_times.append(self.timeline-self.last_refresh)
             self.urgent_commissions_pool = deepcopy(urgent_commissions)
             self.urgent_commissions_pool_len = urgent_commission_count
             self.urgent_id_pool_set = urgent_id_pool_set[:]
@@ -340,6 +344,8 @@ class CommissionSimulator:
         all_commissions_exist = sorted(all_commissions_exist, key=lambda _: _['priority'], reverse=True)
 
         if all_commissions_exist[0]['priority'] == self.priority_none:
+            if not self.run_shortest:
+                return False
             shortest = 1000
             if len(self.daily_commissions_exist) > 0:
                 commission_to_run = self.daily_commissions_exist[0]
@@ -467,8 +473,8 @@ class CommissionSimulator:
             )
         else:
             print(
-                f'Drop rate per minute : {self.config["drop_rate"]}\n'
-                f'Farm hours per Day   : {self.config["farm_time"]}')
+                f'Drop rate per minute     : {self.config["drop_rate"]}\n'
+                f'Farm hours per Day       : {self.config["farm_time"]}')
 
         if self.config['print_filter']:
             print('\nFilter:')
