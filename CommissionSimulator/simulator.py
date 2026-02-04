@@ -393,7 +393,7 @@ class CommissionSimulator:
 
             if self.timeline % (60 * day) == 0:
                 self.event_pause = True
-                self.event_pause_end = self.timeline + self.config['event_pause_days_per_year'] / 6 * day
+                self.event_pause_end = self.timeline + self.config['event_pause_days_per_year'] // 6 * day
                 self.commission_rate_per_minute = self.commission_rate_per_minute/7
 
             if self.timeline == self.event_pause_end:
