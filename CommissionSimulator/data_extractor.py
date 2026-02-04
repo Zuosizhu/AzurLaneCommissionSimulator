@@ -27,6 +27,7 @@ extra_commission = []
 major_commission = []
 urgent_commission = []
 night_commission = []
+gem_urgent_ids = []
 
 while True:
     line = source.readline()
@@ -80,12 +81,18 @@ while True:
         output_prefix = 'urgent_commissions += [{'
         output_data += "    'type': 'Urgent',\n"
         output_data += f"    'weight': {round(rate*333)},\n"
+        if 'Gem' in tag:
+            gem_urgent_ids += [id]
     if 'Night' in tag:
         night_commission += [id]
         output_prefix = 'night_commissions += [{'
         output_data += "    'type': 'Night',\n"
     output = output_prefix + output_data + output_suffix
     py.write(output)
+for _ in range(len(gem_urgent_ids)):
+    gem_urgent_ids[_] = int(gem_urgent_ids[_])
+for _ in range(len(urgent_commission)):
+    urgent_commission[_] = int(urgent_commission[_])
 py.write(f"""daily_commission_count = {len(daily_commission)}
 extra_commission_count = {len(extra_commission)}
 major_commission_count = {len(major_commission)}
@@ -95,6 +102,8 @@ count = {len(daily_commission)+len(extra_commission)+len(major_commission)+len(u
 urgent_commission_count = 0
 for _ in urgent_commissions:
     urgent_commission_count += _['weight']
+gem_urgent_ids = {gem_urgent_ids}
+urgent_id_pool_set = {urgent_commission}
 """)
 py.close()
 source.close()

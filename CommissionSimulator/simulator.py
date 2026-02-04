@@ -24,6 +24,8 @@ class CommissionSimulator:
     commissions_done = []
 
     def __init__(self):
+        self.last_gem_run_out_time = 0
+        self.last_gem_run_times = []
         self.timeline = 0
         self.daily_appear_today_count = 0
         self.daily_done_today_count = 0
@@ -39,6 +41,7 @@ class CommissionSimulator:
         self.last_refresh = 0
         self.running_urgent = 0
         self.commission_rate_per_minute = 0
+        self.urgent_id_pool_set = urgent_id_pool_set[:]
         self.daily_commissions = daily_commissions[:]
         self.extra_commissions = extra_commissions[:]
         self.urgent_commissions = urgent_commissions[:]
@@ -200,27 +203,32 @@ class CommissionSimulator:
             #     break
             # To give up some accuracy to accelerate. A piece of shit. Expired
             if self.urgent_commissions_pool_len == 0:
-                break
+                return False
             urgent_pool_ids = [d.get('id', 0) for d in self.urgent_commissions_pool]
             _break = True
             for id in set(urgent_pool_ids):
                 if id not in self.id_set:
                     _break = False
             if _break:
-                break
-            commission_to_add = \
-                self.random_urgent(commission_list=self.urgent_commissions_pool, type_count=self.urgent_commissions_pool_len)
-            if commission_to_add['id'] in self.id_set:
-                continue
+                return False
+            while True:
+                commission_to_add = \
+                    self.random_urgent(commission_list=self.urgent_commissions_pool,
+                                       type_count=self.urgent_commissions_pool_len)
+                if commission_to_add['id'] in self.id_set:
+                    continue
+                else:
+                    break
             if commission_to_add['weight'] == 1:
                 self.urgent_commissions_pool.remove(commission_to_add)
+                self.urgent_id_pool_set.remove(commission_to_add['id'])
             else:
                 commission_to_add['weight'] -= 1
             self.urgent_commissions_pool_len-=1
             commission_to_add['expire_time'] = self.timeline + commission_to_add['time_limit']
             self.urgent_commissions_exist.append(commission_to_add)
             self.id_set.append(commission_to_add['id'])
-            break
+            return commission_to_add
 
     def add_major(self):
         while True:
@@ -270,6 +278,7 @@ class CommissionSimulator:
             self.add_daily()
 
     def random_urgent(self, commission_list: list, type_count: int) -> dict:
+        # type_count is used in the former way
         _ = choice(commission_list)
         return _
 
@@ -298,12 +307,18 @@ class CommissionSimulator:
 
 
     def try_refresh_urgent_pool(self):
+        if not set(gem_urgent_ids)&set(self.urgent_id_pool_set):
+            if not self.last_gem_run_out_time:
+                self.last_gem_run_out_time = self.timeline - self.last_refresh
         if (self.urgent_commissions_pool_len + len(self.urgent_commissions_exist) + self.running_urgent <= 0)\
                 or (self.timeline - self.last_refresh >= day*7):
             self.urgent_commissions_pool = deepcopy(urgent_commissions)
             self.urgent_commissions_pool_len = urgent_commission_count
+            self.urgent_id_pool_set = urgent_id_pool_set[:]
             self.refresh_times.append((self.timeline-self.last_refresh)/hour)
             self.last_refresh = self.timeline
+            self.last_gem_run_times.append(self.last_gem_run_out_time)
+            self.last_gem_run_out_time = 0
 
     def handle_oil(self):
         if self.event_pause:
@@ -317,43 +332,9 @@ class CommissionSimulator:
             self.oil += self.config['oil_resume_rate'] - self.oil_consume_rate
         else:
             self.oil += self.config['oil_resume_rate']
+        return True
 
     def run_one(self):
-        # for filter_commission_tag in self.filter:
-        #     if 'Daily' in filter_commission_tag or 'Extra' in filter_commission_tag:
-        #         for commission in self.daily_commissions_exist:
-        #             if filter_commission_tag == commission['tag']:
-        #                 self.daily_commissions_exist.remove(commission)
-        #                 commission_to_run = commission
-        #                 commission_to_run['finish_time'] = self.timeline + commission['time']
-        #                 self.commissions_run.append(commission_to_run)
-        #                 return
-        #     if 'Urgent' in filter_commission_tag \
-        #             or 'Gem' in filter_commission_tag or 'Ship' in filter_commission_tag:
-        #         for commission in self.urgent_commissions_exist:
-        #             if filter_commission_tag == commission['tag']:
-        #                 self.urgent_commissions_exist.remove(commission)
-        #                 commission_to_run = commission
-        #                 commission_to_run['finish_time'] = self.timeline + commission['time']
-        #                 self.commissions_run.append(commission_to_run)
-        #                 return
-        #     if 'Major' in filter_commission_tag:
-        #         for commission in self.major_commissions_exist:
-        #             if filter_commission_tag == commission['tag']:
-        #                 self.major_commissions_exist.remove(commission)
-        #                 commission_to_run = commission
-        #                 commission_to_run['finish_time'] = self.timeline + commission['time']
-        #                 self.commissions_run.append(commission_to_run)
-        #                 return
-        #     if 'Night' in filter_commission_tag:
-        #         for commission in self.night_commissions_exist:
-        #             if filter_commission_tag == commission['tag']:
-        #                 self.night_commissions_exist.remove(commission)
-        #                 commission_to_run = commission
-        #                 commission_to_run['finish_time'] = self.timeline + commission['time']
-        #                 self.commissions_run.append(commission_to_run)
-        #                 return
-
         all_commissions_exist = self.daily_commissions_exist + self.urgent_commissions_exist + \
                                 self.night_commissions_exist + self.major_commissions_exist
         all_commissions_exist = sorted(all_commissions_exist, key=lambda _: _['priority'], reverse=True)
@@ -534,7 +515,11 @@ class CommissionSimulator:
                 print(f'Major done:{self.major_done_count}')
 
         if len(self.refresh_times):
-            print("\nAverage pool refresh time(Hours): ", '%.4f' % round(sum(self.refresh_times) / len(self.refresh_times), 4))
+            print("\nAverage pool refresh time(Hours): ",
+                  '%.4f' % round(sum(self.refresh_times) / len(self.refresh_times), 4))
+        if len(self.last_gem_run_times):
+            print("Average gem run out time(Hours):",
+                  '%.4f' % round(sum(self.last_gem_run_times) / len(self.last_gem_run_times) / hour , 4))
 
         total_value = 0
         print('Income:')
