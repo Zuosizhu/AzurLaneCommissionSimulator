@@ -1,43 +1,49 @@
 """
-config = {
-    time: days to simulate
-    drop_rate: urgent commissions appear in 1 minute averagely. (0,03 recommended for 2-4 and A3)
-    farm_time: how many hours you will farm in 2-4(or A3) per day.
-    use_oil_limitation: use oil limit instead of farm_time limits.
-    oil_resume_rate: how much oil is resumed per minute. (1.6 for full upgraded)
-    oil_get_per_week: how much oil is get per week.
-                      (and also count weekly decrease such as OperationSiren,
-                      which is called OpSi in Alas, Opsi costs 10000/week)
-                      (12660 for not buying the OpSi action points, +1400 for monthly pass，+553.8 for season pass,
-                      +1638 for collecting mail, -10000 for OpSi action points)
-    oil_other_used_per_day: how much oil is used in other way per day. For example, 200 for hard mode in main Chapters.
-                            don't count weekly or monthly costs.
-    commission_per_round: 0.18 for 2-4, 0.2 for A3, 0.3 for Campaign from chapter 6 to 12, 0.35 for chapter 13 to 15-2,
-                          0.4 for 15-3/4.
-    event_pause_days_per_year: time spent pausing farming in raid event. will divide by 6 parts and pause every 60 days.
-                              oil will not resume or get from commission in that days
-}
+Battle-based Commission Simulator Configuration
+
+Parameters:
+    TIME: Days to simulate
+    OIL_RESUME_RATE: Oil resumed per minute (1.6 for full upgraded)
+    OIL_GET_PER_WEEK: Oil received per week
+    OIL_OTHER_PER_DAY: Oil used for other activities per day (e.g., hard mode)
+    EVENT_PAUSE_DAYS: Days paused during raid events per year
+    ELITE_COUNT: Number of elite enemies (1-3 typical)
+    BATTLE_COUNT: Total battles in one map run (6-12 typical)
+    BOSS_COUNT: Number of boss battles (1 typical)
+    BATTLE_TIME: Time per battle in minutes (3 typical)
+    MAP_COST_OIL: Oil cost to enter a map (10 typical)
+    BATTLE_COST_OIL: Oil cost per battle (3 typical)
+    BOSS_COST_OIL: Oil cost per boss battle (5 typical)
+    MAP_DROP_RATE: Drop rate when entering map (0.005 main, 0.0025 event)
+    ELITE_DROP_RATE: Drop rate for elite battles (0.03-0.08)
+    NORMAL_DROP_RATE: Drop rate for normal battles (0.03-0.075)
+    BOSS_DROP_RATE: Drop rate for boss battles (0.075)
 """
 
 config = {
-    'time': 3650,
-    'drop_rate': 0.03,
-    'farm_time': 12,
-    'use_oil_limitation': True,
-    'oil_resume_rate': 1.6,
-    'oil_get_per_week': 2660,
-    'oil_other_used_per_day': 200,
-    'oil_used_per_round': 22,
-    'minute_per_round': 3,
-    'commission_per_round': 0.18,
-    'event_pause_days_per_year': 48,
-    'print_commission_done': False,
-    'print_filter': False
+    'TIME': 3650,
+    'OIL_RESUME_RATE': 1.6,
+    'OIL_GET_PER_WEEK': 2660,
+    'OIL_OTHER_PER_DAY': 200,
+    'EVENT_PAUSE_DAYS': 48,
+    'ELITE_COUNT': 0,
+    'BATTLE_COUNT': 5,
+    'BOSS_COUNT': 1,
+    'BATTLE_TIME': 0.02,
+    'MAP_COST_OIL': 10,
+    'BATTLE_COST_OIL': 3,
+    'BOSS_COST_OIL': 3,
+    'ELITE_DROP_RATE': 0.05,
+    'NORMAL_DROP_RATE': 0.05,
+    'BOSS_DROP_RATE': 0.075,
+    'MAP_DROP_RATE': 0.005,
+    'PRINT_COMMISSION_DONE': False,
+    'PRINT_FILTER': False,
 }
 
 """
-Value means how much oil you consider the recourses as. Balanced setting is provided. You can find more settings in the 
-excel file in this repo.
+Resource Value Configuration
+Balanced settings for resource valuation
 """
 
 Value = {
@@ -55,7 +61,6 @@ Value = {
 }
 
 # Yes, you can run simulator here in IDE, as it seems ridiculous in a config file. BUT I LOVE IT!!!
-
 if __name__ == '__main__':
     from simulator import CommissionSimulator
 

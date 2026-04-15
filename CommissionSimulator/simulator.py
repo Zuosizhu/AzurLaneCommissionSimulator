@@ -53,6 +53,9 @@ class CommissionSimulator:
             self.total_income[_] = 0
         # Initialize income sum
 
+        # total_rate: cumulative probability boundary for weighted random selection
+        # random number rand falls into (previous_total_rate, current_total_rate] to select this commission
+        # example: Commission A (0-0.1), Commission B (0.1-0.3), Commission C (0.3-0.7)
         total_rate = 0
         for _ in range(daily_commission_count):
             total_rate += daily_commissions[_]['rate']
@@ -325,17 +328,50 @@ class CommissionSimulator:
             self.last_gem_run_out_time = 0
 
     def handle_oil(self):
+        # Handle oil natural recovery (resumes per minute)
+        # Do not recover during event_pause
         if self.event_pause:
             return False
         if self.timeline % week == 0:
-            self.oil+=self.config['oil_get_per_week']
+            self.oil += self.config['OIL_GET_PER_WEEK']
         if self.timeline % day == 0:
-            self.oil-=self.config['oil_other_used_per_day']
-        # if self.oil > self.oil_consume_rate:
+            self.oil -= self.config['OIL_OTHER_PER_DAY']
         if self.oil > 0:
-            self.oil += self.config['oil_resume_rate'] - self.oil_consume_rate
+            self.oil += self.config['OIL_RESUME_RATE']
         else:
-            self.oil += self.config['oil_resume_rate']
+            self.oil += self.config['OIL_RESUME_RATE']
+        return True
+
+    def handle_battle(self):
+        # Battle simulation: trigger drop check when entering map/battle
+        # Use summary calculation method, calculate total cost and drop chance for one battle flow
+        if self.oil < self.total_oil_cost:
+            return False
+
+        self.oil -= self.total_oil_cost
+        self.timeline += self.total_battle_time
+        self.battle_run_count += 1
+
+        # Drop check when entering map
+        if random() < self.config['MAP_DROP_RATE']:
+            self.add_urgent()
+
+        # Elite battle drop check
+        for _ in range(self.config['ELITE_COUNT']):
+            if random() < self.config['ELITE_DROP_RATE']:
+                self.add_urgent()
+
+        # Normal battle drop check
+        normal_battles = self.config['BATTLE_COUNT'] - self.config['BOSS_COUNT'] - config['ELITE_COUNT']
+        for _ in range(normal_battles):
+            if random() < self.config['NORMAL_DROP_RATE']:
+                self.add_urgent()
+
+        # Boss battle drop check
+        for _ in range(self.config['BOSS_COUNT']):
+            if random() < self.config['BOSS_DROP_RATE']:
+                self.add_urgent()
+
         return True
 
     def run_one(self):
@@ -388,95 +424,90 @@ class CommissionSimulator:
         for _ in range(4):
             self.add_daily()
         self.timeline = 0
-        self.oil_consume_rate = self.config['oil_used_per_round']/self.config['minute_per_round']
-        self.commission_rate_per_minute = self.config['commission_per_round']/self.config['minute_per_round']
-        while self.timeline <= self.config['time'] * day:
+        self.oil_consume_rate = 0
+        # Initialize battle system parameters
+        self.total_battle_time = self.config['BATTLE_TIME'] * self.config['BATTLE_COUNT']
+        if self.total_battle_time < 1:
+            self.total_battle_time = 1
+        normal_battles = self.config['BATTLE_COUNT'] - self.config['BOSS_COUNT']
+        self.total_oil_cost = self.config['MAP_COST_OIL'] + \
+                           self.config['BATTLE_COST_OIL'] * normal_battles + \
+                           self.config['BOSS_COST_OIL'] * self.config['BOSS_COUNT']
+        self.battle_run_count = 0
+        while self.timeline <= self.config['TIME'] * day:
+            # If getting to the next day, refill the daily list immediately( which is what Alas does in most situations)
             if self.timeline % day == 0:
                 self.daily_appear_today_count = 0
                 self.daily_done_today_count = 0
                 self.refill_daily()
-            # If getting to the next day, refill the daily list immediately( which is what Alas does in most situations)
 
+            # Handle event pause. If in event pause, pause all oil calc.
             if self.timeline % (60 * day) == 0:
                 self.event_pause = True
-                self.event_pause_end = self.timeline + self.config['event_pause_days_per_year'] // 6 * day
-                self.commission_rate_per_minute = self.commission_rate_per_minute/7
+                self.event_pause_end = self.timeline + self.config['EVENT_PAUSE_DAYS'] // 6 * day
 
-            if self.timeline == self.event_pause_end:
+            if self.timeline >= self.event_pause_end:
                 self.event_pause = False
                 self.event_pause_end = 0
-                self.commission_rate_per_minute = self.config['commission_per_round']/self.config['minute_per_round']
 
-            # If in event pause, pause all oil calc and set event time rates
-
+            # Cope with night commissions
             if self.timeline % day == 3 * hour:
                 self.delete_night()
             if self.timeline % day == 21 * hour:
                 self.fill_night()
 
-            # Cope with night commissions
-
-            for _ in self.urgent_commissions_exist:
+            # Delete the expired urgent commissions in list
+            for _ in self.urgent_commissions_exist[:]:
                 if self.timeline > _['expire_time']:
                     self.urgent_commissions_exist.remove(_)
                     self.id_set.remove(_['id'])
                     self.try_refresh_urgent_pool()
-            # Delete the expired urgent commissions in list
 
-            for _ in self.commissions_run:
+            # Maintaining the running list
+            for _ in self.commissions_run[:]:
                 if self.timeline > _['finish_time']:
                     self.finish_one(_)
                     if not self.event_pause:
                         self.oil += _['oil']
-            # Maintaining the running list
 
-            drop = False
-            if self.config['use_oil_limitation']:
-                self.handle_oil()
-                if self.oil >= 0:
-                    rand = random()
-                    drop = rand < self.commission_rate_per_minute
+            # Oil recovery
+            self.handle_oil()
+
+            # Execute battle (battle function advances timeline internally)
+            if (self.oil >= self.total_oil_cost) and (not self.event_pause):
+                self.handle_battle()
             else:
-                if self.timeline % day <= self.config['farm_time']*hour:
-                    rand = random()
-                    drop = rand < self.config['drop_rate']
-            if drop:
-                    self.add_urgent()
-            # Add urgent commissions to urgent list if success
+                # Still need to advance timeline when oil is insufficient
+                self.timeline += 1
 
+            # Fill commission slots
             trial = 0
             while len(self.commissions_run) < 4 and trial <= 4:
                 self.run_one()
                 trial += 1
-            # Select commission to run
-
-            self.timeline += 1
-            # Time changed
 
 
     def run(self):
         import time
         timestamp_1 = time.time()
-        if self.config['time'] <= 0 or not 0 <= self.config['drop_rate'] <= 1:
-            exit('Illegal config.')
+        # Validate config parameters
+        required = ['TIME', 'OIL_RESUME_RATE', 'OIL_GET_PER_WEEK', 'OIL_OTHER_PER_DAY',
+                   'EVENT_PAUSE_DAYS', 'BATTLE_COUNT', 'BATTLE_TIME', 'MAP_COST_OIL',
+                   'BATTLE_COST_OIL', 'BOSS_COST_OIL', 'ELITE_DROP_RATE',
+                   'NORMAL_DROP_RATE', 'BOSS_DROP_RATE', 'MAP_DROP_RATE']
+        for param in required:
+            if param not in self.config:
+                exit(f'Missing config parameter: {param}')
 
-        print(  f'Time(Days)               : {self.config["time"]}')
-        if self.config['use_oil_limitation']:
-            print(
-                f"Oil resume rate          : {self.config['oil_resume_rate']}\n"
-                f"Oil get per week         : {self.config['oil_get_per_week']}\n"
-                f"oil_other_used_per_day   : {self.config['oil_other_used_per_day']}\n"
-                f"Oil used per round       : {self.config['oil_used_per_round']}\n"
-                f"Minutes per round        : {self.config['minute_per_round']}\n"
-                f"Commission per round     : {self.config['commission_per_round']}\n"
-                f"event_pause_days_per_year: {self.config['event_pause_days_per_year']}\n"
-            )
-        else:
-            print(
-                f'Drop rate per minute     : {self.config["drop_rate"]}\n'
-                f'Farm hours per Day       : {self.config["farm_time"]}')
+        # Output config (aligned with 20 characters before colon)
+        output_keys = ['TIME', 'OIL_RESUME_RATE', 'OIL_GET_PER_WEEK', 'OIL_OTHER_PER_DAY',
+                       'EVENT_PAUSE_DAYS', 'ELITE_COUNT', 'BATTLE_COUNT', 'BOSS_COUNT',
+                       'BATTLE_TIME', 'MAP_COST_OIL', 'BATTLE_COST_OIL', 'BOSS_COST_OIL',
+'MAP_DROP_RATE', 'ELITE_DROP_RATE', 'NORMAL_DROP_RATE', 'BOSS_DROP_RATE']
+        for key in output_keys:
+            print(f"{key:<20}: {self.config[key]}")
 
-        if self.config['print_filter']:
+        if self.config.get('PRINT_FILTER', False):
             print('\nFilter:')
             if '' in self.filter:
                 self.filter.remove('')
@@ -502,7 +533,7 @@ class CommissionSimulator:
         max_len_total = len('%.4f' % round(self.total_income['oil'], 4))
         commissions = daily_commissions + extra_commissions + major_commissions + urgent_commissions + night_commissions
 
-        if self.config['print_commission_done']:
+        if self.config.get('PRINT_COMMISSION_DONE', False):
             print('\nCommissions done:')
             # print('Daily commissions done count:', CE.daily_done_count)
             for _ in range(count):
@@ -521,11 +552,13 @@ class CommissionSimulator:
                 print(f'Major done:{self.major_done_count}')
 
         if len(self.refresh_times):
-            print("\nAverage pool refresh time(Hours): ",
-                  '%.4f' % round(sum(self.refresh_times) / len(self.refresh_times), 4))
+            print(f"\nAverage pool refresh time (Hours): {'%.4f' % round(sum(self.refresh_times) / len(self.refresh_times), 4)}")
         if len(self.last_gem_run_times):
-            print("Average gem run out time(Hours):",
-                  '%.4f' % round(sum(self.last_gem_run_times) / len(self.last_gem_run_times) / hour , 4))
+            print(f"Average gem run out time  (Hours):  {'%.4f' % round(sum(self.last_gem_run_times) / len(self.last_gem_run_times) / hour , 4)}")
+        # Battle statistics output
+        if hasattr(self, 'battle_run_count'):
+            print(f"\nBattles count      : {self.battle_run_count}")
+            print(f"Avg battles per day: {'%.2f' % round(self.battle_run_count / self.config['TIME'], 2)}")
 
         total_value = 0
         print('Income:')
@@ -533,12 +566,12 @@ class CommissionSimulator:
             k = k.capitalize()
             total_value += v*Value[k]
             t = '%.3f' % round(v, 3)
-            v = '%.4f' % round(v / self.config['time'], 4)
+            v = '%.4f' % round(v / self.config['TIME'], 4)
             print('  ' + k + (10 - len(k)) * ' ' + ': ' + ((12 - len(v)) * ' ') + v + '/Day' + '     Total:' +
                   (max_len_total + 1 - len(t)) * ' ' + t)
         k = "Total value"
         t = '%.3f' % round(total_value,3)
-        v = '%.4f' % round(total_value / self.config['time'], 4)
+        v = '%.4f' % round(total_value / self.config['TIME'], 4)
         print(k + (12 - len(k)) * ' ' + ': ' + ((12 - len(v)) * ' ') + v + '/Day' + '     Total:' +
               (max_len_total + 1 - len(t)) * ' ' + t)
 
