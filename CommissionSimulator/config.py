@@ -6,7 +6,8 @@ Parameters:
     OIL_RESUME_RATE: Oil resumed per minute (1.6 for full upgraded)
     OIL_GET_PER_WEEK: Oil received per week
     OIL_OTHER_PER_DAY: Oil used for other activities per day (e.g., hard mode)
-    EVENT_PAUSE_DAYS: Days paused during raid events per year
+    EVENT_PAUSE_INTERVAL: Days between each event pause
+    EVENT_PAUSE_DURATION: Days each event pause lasts
     ELITE_COUNT: Number of elite enemies (1-3 typical)
     BATTLE_COUNT: Total battles in one map run (6-12 typical)
     BOSS_COUNT: Number of boss battles (1 typical)
@@ -25,7 +26,8 @@ config = {
     'OIL_RESUME_RATE': 1.6,
     'OIL_GET_PER_WEEK': 2660,
     'OIL_OTHER_PER_DAY': 200,
-    'EVENT_PAUSE_DAYS': 48,
+    'EVENT_PAUSE_INTERVAL': 60,
+    'EVENT_PAUSE_DURATION': 8,
     'ELITE_COUNT': 0,
     'BATTLE_COUNT': 5,
     'BOSS_COUNT': 1,

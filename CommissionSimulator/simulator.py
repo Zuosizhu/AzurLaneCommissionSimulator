@@ -35,15 +35,19 @@ class CommissionSimulator:
         self.extra_done_count = 0
         self.night_done_count = 0
         self.major_done_count = 0
-        self.oil_consume_rate = 0
-        self.event_pause = False
-        self.event_pause_end = 0
         self.refresh_times = []
         self.last_refresh = 0
         self.running_urgent = 0
-        self.commission_rate_per_minute = 0
         self._priority_dirty = True
         self._cached_sorted = []
+
+        self._in_battle = False
+        self._battle_end_time = 0
+        self._battle_cooldown_end = 0
+        self._battle_start_event_pause = False
+        self._end_time = 0
+        self._pause_interval_min = 0
+        self._pause_duration_min = 0
 
         self._init_commission_data()
 
@@ -96,6 +100,24 @@ class CommissionSimulator:
 
     def _invalidate_priority_cache(self):
         self._priority_dirty = True
+
+    def _is_event_pause_at(self, time):
+        if time < self._pause_interval_min:
+            return False
+        adjusted = time - self._pause_interval_min
+        cycle_pos = adjusted % self._pause_interval_min
+        return cycle_pos < self._pause_duration_min
+
+    def _next_pause_boundary(self, time):
+        if time < self._pause_interval_min:
+            return self._pause_interval_min
+        adjusted = time - self._pause_interval_min
+        cycle_pos = adjusted % self._pause_interval_min
+        cycle_start = time - cycle_pos
+        if cycle_pos < self._pause_duration_min:
+            return cycle_start + self._pause_duration_min
+        else:
+            return cycle_start + self._pause_interval_min
 
     def finish_one(self, commission_to_finish: Commission):
         self.id_set.discard(commission_to_finish.id)
@@ -235,38 +257,81 @@ class CommissionSimulator:
             self.last_gem_run_times.append(self.last_gem_run_out_time)
             self.last_gem_run_out_time = 0
 
-    def _handle_oil(self):
-        if self.event_pause:
-            return False
-        if self.timeline % WEEK == 0:
+    def _compute_oil_delta(self, from_time, to_time):
+        return (to_time - from_time) * self.config['OIL_RESUME_RATE']
+
+    def _process_scheduled_events(self):
+        self.event_pause = self._is_event_pause_at(self.timeline)
+
+        if self.timeline % WEEK == 0 and not self.event_pause:
             self.oil += self.config['OIL_GET_PER_WEEK']
-        if self.timeline % DAY == 0:
+
+        if self.timeline % DAY == 0 and not self.event_pause:
             self.oil -= self.config['OIL_OTHER_PER_DAY']
-        self.oil += self.config['OIL_RESUME_RATE']
-        return True
 
-    def _handle_battle(self):
-        if self.oil < self.total_oil_cost:
-            return False
+        if self.timeline % DAY == 0:
+            self.daily_appear_today_count = 0
+            self.daily_done_today_count = 0
+            self._refill_daily()
 
+        if self.timeline % DAY == 3 * HOUR:
+            self._delete_night()
+
+        if self.timeline % DAY == 21 * HOUR:
+            self._fill_night()
+
+    def _process_finished_commissions(self):
+        finished = [c for c in self.commissions_run if self.timeline >= c.finish_time]
+        for c in finished:
+            self.finish_one(c)
+            if not self.event_pause:
+                self.oil += c.oil
+
+    def _process_expired_urgents(self):
+        expired = [c for c in self.urgent_commissions_exist if self.timeline >= c.expire_time]
+        for c in expired:
+            self.urgent_commissions_exist.remove(c)
+            self.id_set.discard(c.id)
+            self._invalidate_priority_cache()
+            self._try_refresh_urgent_pool()
+
+    def _fill_commission_slots(self):
+        trial = 0
+        while len(self.commissions_run) < 4 and trial <= 4:
+            result = self._run_one()
+            if result is False:
+                break
+            trial += 1
+
+    def _can_start_battle(self):
+        return self.oil >= self.total_oil_cost
+
+    def _start_battle(self):
         self.oil -= self.total_oil_cost
-        self.timeline += math.ceil(self.total_battle_time)
+        self._in_battle = True
+        self._battle_start_event_pause = self.event_pause
+        self._battle_end_time = self.timeline + math.ceil(self.total_battle_time)
         self.battle_run_count += 1
 
+    def _finish_battle(self):
+        self._in_battle = False
+        self._generate_battle_drops()
+
+    def _generate_battle_drops(self):
+        if self._battle_start_event_pause:
+            return
         if random() < self.config['MAP_DROP_RATE']:
             self._add_urgent()
         for _ in range(self.config['ELITE_COUNT']):
             if random() < self.config['ELITE_DROP_RATE']:
                 self._add_urgent()
-        normal_battles = self.config['BATTLE_COUNT'] - self.config['BOSS_COUNT'] - config['ELITE_COUNT']
-        for _ in range(normal_battles):
+        normal = self.config['BATTLE_COUNT'] - self.config['BOSS_COUNT'] - self.config['ELITE_COUNT']
+        for _ in range(normal):
             if random() < self.config['NORMAL_DROP_RATE']:
                 self._add_urgent()
         for _ in range(self.config['BOSS_COUNT']):
             if random() < self.config['BOSS_DROP_RATE']:
                 self._add_urgent()
-
-        return True
 
     def _run_one(self):
         if self._priority_dirty:
@@ -316,83 +381,47 @@ class CommissionSimulator:
         self.commissions_run.append(commission_to_run)
         self._invalidate_priority_cache()
 
-    def _process_tick_events(self):
-        if self.timeline % DAY == 0:
-            self.daily_appear_today_count = 0
-            self.daily_done_today_count = 0
-            self._refill_daily()
-
-        if self.timeline % (60 * DAY) == 0:
-            self.event_pause = True
-            self.event_pause_end = self.timeline + self.config['EVENT_PAUSE_DAYS'] // 6 * DAY
-
-        if self.timeline >= self.event_pause_end:
-            self.event_pause = False
-            self.event_pause_end = 0
-
-        if self.timeline % DAY == 3 * HOUR:
-            self._delete_night()
-        if self.timeline % DAY == 21 * HOUR:
-            self._fill_night()
-
-        expired = [c for c in self.urgent_commissions_exist if self.timeline > c.expire_time]
-        for c in expired:
-            self.urgent_commissions_exist.remove(c)
-            self.id_set.discard(c.id)
-            self._invalidate_priority_cache()
-            self._try_refresh_urgent_pool()
-
-        finished = [c for c in self.commissions_run if self.timeline > c.finish_time]
-        for c in finished:
-            self.finish_one(c)
-            if not self.event_pause:
-                self.oil += c.oil
-
-        self._handle_oil()
-
-        trial = 0
-        while len(self.commissions_run) < 4 and trial <= 4:
-            self._run_one()
-            trial += 1
-
-    def _compute_oil_accumulation(self, from_time, to_time):
-        delta = to_time - from_time
-        oil = delta * self.config['OIL_RESUME_RATE']
-        first_week = ((from_time // WEEK) + 1) * WEEK
-        week = first_week
-        while week <= to_time:
-            oil += self.config['OIL_GET_PER_WEEK']
-            week += WEEK
-        first_day = ((from_time // DAY) + 1) * DAY
-        day = first_day
-        while day <= to_time:
-            oil -= self.config['OIL_OTHER_PER_DAY']
-            day += DAY
-        return oil
-
-    def _next_event_time(self, max_time):
-        next_time = max_time
-        if self.commissions_run:
-            earliest_finish = min(c.finish_time for c in self.commissions_run) + 1
-            if earliest_finish < next_time:
-                next_time = earliest_finish
-        if self.urgent_commissions_exist:
-            earliest_expire = min(c.expire_time for c in self.urgent_commissions_exist) + 1
-            if earliest_expire < next_time:
-                next_time = earliest_expire
+    def _compute_next_event_time(self):
+        next_time = self._end_time + 1
         today_base = (self.timeline // DAY) * DAY
-        for checkpoint in [0, 3 * HOUR, 21 * HOUR]:
+
+        if not self._in_battle and self.commissions_run:
+            earliest = min(c.finish_time for c in self.commissions_run)
+            if earliest < next_time:
+                next_time = earliest
+
+        if not self._in_battle and self.urgent_commissions_exist:
+            earliest = min(c.expire_time for c in self.urgent_commissions_exist)
+            if earliest < next_time:
+                next_time = earliest
+
+        if self._in_battle and self._battle_end_time < next_time:
+            next_time = self._battle_end_time
+
+        if self._battle_cooldown_end > self.timeline and self._battle_cooldown_end < next_time:
+            next_time = self._battle_cooldown_end
+
+        for checkpoint in [3 * HOUR, 21 * HOUR]:
             t = today_base + checkpoint
-            if t > self.timeline and t < next_time:
+            if t <= self.timeline:
+                t += DAY
+            if t < next_time:
                 next_time = t
+
         next_day = today_base + DAY
+        if next_day <= self.timeline:
+            next_day += DAY
         if next_day < next_time:
             next_time = next_day
+
         next_week = ((self.timeline // WEEK) + 1) * WEEK
         if next_week < next_time:
             next_time = next_week
-        if self.event_pause and self.event_pause_end > self.timeline and self.event_pause_end < next_time:
-            next_time = self.event_pause_end
+
+        pause_boundary = self._next_pause_boundary(self.timeline)
+        if pause_boundary < next_time:
+            next_time = pause_boundary
+
         return next_time
 
     def _start_simulate(self):
@@ -400,32 +429,45 @@ class CommissionSimulator:
         for _ in range(4):
             self._add_daily()
         self.timeline = 0
-        self.oil_consume_rate = 0
+        self._end_time = self.config['TIME'] * DAY
+        self._pause_interval_min = self.config['EVENT_PAUSE_INTERVAL'] * DAY
+        self._pause_duration_min = self.config['EVENT_PAUSE_DURATION'] * DAY
         self.total_battle_time = self.config['BATTLE_TIME'] * self.config['BATTLE_COUNT']
         normal_battles = self.config['BATTLE_COUNT'] - self.config['BOSS_COUNT']
-        self.total_oil_cost = self.config['MAP_COST_OIL'] + \
-                               self.config['BATTLE_COST_OIL'] * normal_battles + \
-                               self.config['BOSS_COST_OIL'] * self.config['BOSS_COUNT']
+        self.total_oil_cost = (self.config['MAP_COST_OIL'] +
+                               self.config['BATTLE_COST_OIL'] * normal_battles +
+                               self.config['BOSS_COST_OIL'] * self.config['BOSS_COUNT'])
         self.battle_run_count = 0
+        self._battle_cooldown_end = 0
+        self.event_pause = False
 
-        while self.timeline <= self.config['TIME'] * DAY:
-            self._process_tick_events()
+        while self.timeline <= self._end_time:
+            self._process_scheduled_events()
 
-            if (self.oil >= self.total_oil_cost) and (not self.event_pause):
-                self._handle_battle()
-            else:
-                if self.event_pause:
-                    self.timeline += 1
-                else:
-                    wait_duration = randint(120, 240)
-                    wait_end = self.timeline + wait_duration
-                    while self.timeline < wait_end:
-                        next_time = self._next_event_time(wait_end)
-                        if next_time > self.timeline:
-                            oil_delta = self._compute_oil_accumulation(self.timeline, next_time)
-                            self.oil += oil_delta
-                            self.timeline = next_time
-                        self._process_tick_events()
+            if self._in_battle and self.timeline >= self._battle_end_time:
+                self._finish_battle()
+
+            if not self._in_battle:
+                self._process_expired_urgents()
+                self._process_finished_commissions()
+                self._fill_commission_slots()
+
+                if not self.event_pause:
+                    if self.timeline >= self._battle_cooldown_end:
+                        if self._can_start_battle():
+                            self._start_battle()
+                            continue
+                        else:
+                            self._battle_cooldown_end = self.timeline + randint(120, 240)
+
+            next_time = self._compute_next_event_time()
+            if next_time <= self.timeline:
+                break
+
+            if not self.event_pause:
+                self.oil += self._compute_oil_delta(self.timeline, next_time)
+
+            self.timeline = next_time
 
     def run(self):
         import time
