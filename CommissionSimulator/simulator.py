@@ -40,6 +40,9 @@ class CommissionSimulator:
         self.running_urgent = 0
         self._priority_dirty = True
         self._cached_sorted = []
+        self._min_finish_time = None
+        self._min_expire_time = None
+        self._urgent_pool_ids_cache = None
 
         self._in_battle = False
         self._battle_end_time = 0
@@ -98,6 +101,30 @@ class CommissionSimulator:
             c.total_rate += self.daily_commissions[-1].total_rate
         self.daily_and_extra_commissions = list(self.daily_commissions) + self.daily_and_extra_commissions
 
+    def _get_min_finish_time(self):
+        if self._min_finish_time is None and self.commissions_run:
+            self._min_finish_time = min(c.finish_time for c in self.commissions_run)
+        return self._min_finish_time if self._min_finish_time is not None else float('inf')
+
+    def _get_min_expire_time(self):
+        if self._min_expire_time is None and self.urgent_commissions_exist:
+            self._min_expire_time = min(c.expire_time for c in self.urgent_commissions_exist)
+        return self._min_expire_time if self._min_expire_time is not None else float('inf')
+
+    def _invalidate_expire_cache(self):
+        self._min_expire_time = None
+
+    def _invalidate_finish_cache(self):
+        self._min_finish_time = None
+
+    def _rebuild_priority_cache(self):
+        self._cached_sorted = sorted(
+            self.daily_commissions_exist + self.urgent_commissions_exist +
+            self.night_commissions_exist + self.major_commissions_exist,
+            key=lambda c: c.priority, reverse=True
+        )
+        self._priority_dirty = False
+
     def _invalidate_priority_cache(self):
         self._priority_dirty = True
 
@@ -122,7 +149,6 @@ class CommissionSimulator:
     def finish_one(self, commission_to_finish: Commission):
         self.id_set.discard(commission_to_finish.id)
         self.commissions_done[commission_to_finish.id] += 1
-        self.commissions_run.remove(commission_to_finish)
         self._invalidate_priority_cache()
         for k, v in commission_to_finish.resource_pairs():
             if k in self.total_income:
@@ -173,8 +199,9 @@ class CommissionSimulator:
     def _add_urgent(self):
         if self.urgent_commissions_pool_len == 0:
             return False
-        urgent_pool_ids = {c.id for c in self.urgent_commissions_pool}
-        if urgent_pool_ids <= self.id_set:
+        if self._urgent_pool_ids_cache is None:
+            self._urgent_pool_ids_cache = frozenset(c.id for c in self.urgent_commissions_pool)
+        if self._urgent_pool_ids_cache <= self.id_set:
             return False
         while True:
             commission_to_add = random_urgent(self.urgent_commissions_pool)
@@ -184,10 +211,12 @@ class CommissionSimulator:
         if commission_to_add.weight == 1:
             self.urgent_commissions_pool.remove(commission_to_add)
             self.urgent_id_pool_set.discard(commission_to_add.id)
+            self._urgent_pool_ids_cache = None
         else:
             commission_to_add.weight -= 1
         self.urgent_commissions_pool_len -= 1
         commission_to_add.expire_time = self.timeline + commission_to_add.time_limit
+        self._invalidate_expire_cache()
         self.urgent_commissions_exist.append(commission_to_add)
         self.id_set.add(commission_to_add.id)
         self._invalidate_priority_cache()
@@ -252,6 +281,7 @@ class CommissionSimulator:
             self.urgent_commissions_pool = [copy(c) for c in self.urgent_commissions]
             self.urgent_commissions_pool_len = urgent_commission_count
             self.urgent_id_pool_set = set(urgent_id_pool_set)
+            self._urgent_pool_ids_cache = None
             self.refresh_times.append((self.timeline - self.last_refresh) / HOUR)
             self.last_refresh = self.timeline
             self.last_gem_run_times.append(self.last_gem_run_out_time)
@@ -281,27 +311,83 @@ class CommissionSimulator:
             self._fill_night()
 
     def _process_finished_commissions(self):
-        finished = [c for c in self.commissions_run if self.timeline >= c.finish_time]
+        if not self.commissions_run or self._get_min_finish_time() > self.timeline:
+            return
+        still_running = []
+        finished = []
+        for c in self.commissions_run:
+            if self.timeline >= c.finish_time:
+                finished.append(c)
+            else:
+                still_running.append(c)
+        if not finished:
+            return
+        self.commissions_run = still_running
+        self._invalidate_finish_cache()
         for c in finished:
             self.finish_one(c)
             if not self.event_pause:
                 self.oil += c.oil
 
     def _process_expired_urgents(self):
-        expired = [c for c in self.urgent_commissions_exist if self.timeline >= c.expire_time]
+        if not self.urgent_commissions_exist or self._get_min_expire_time() > self.timeline:
+            return
+        expired = []
+        still_valid = []
+        for c in self.urgent_commissions_exist:
+            if self.timeline >= c.expire_time:
+                expired.append(c)
+            else:
+                still_valid.append(c)
+        if not expired:
+            return
+        self.urgent_commissions_exist = still_valid
+        self._invalidate_expire_cache()
         for c in expired:
-            self.urgent_commissions_exist.remove(c)
             self.id_set.discard(c.id)
-            self._invalidate_priority_cache()
+        self._invalidate_priority_cache()
+        for c in expired:
             self._try_refresh_urgent_pool()
 
     def _fill_commission_slots(self):
-        trial = 0
-        while len(self.commissions_run) < 4 and trial <= 4:
-            result = self._run_one()
-            if result is False:
+        while len(self.commissions_run) < 4:
+            if self._priority_dirty:
+                self._rebuild_priority_cache()
+            if not self._cached_sorted:
                 break
-            trial += 1
+            best = self._cached_sorted[0]
+            if best.priority == PRIORITY_NONE:
+                if not self.run_shortest:
+                    break
+                if not self.daily_commissions_exist:
+                    break
+                commission_to_run = min(self.daily_commissions_exist, key=lambda c: c.time)
+                self.daily_commissions_exist.remove(commission_to_run)
+                try:
+                    self._cached_sorted.remove(commission_to_run)
+                except ValueError:
+                    pass
+                commission_to_run.finish_time = self.timeline + commission_to_run.time
+                self._invalidate_finish_cache()
+                self.commissions_run.append(commission_to_run)
+                continue
+            del self._cached_sorted[0]
+            type_dispatch = {
+                'Daily': self.daily_commissions_exist,
+                'Extra': self.daily_commissions_exist,
+                'Urgent': self.urgent_commissions_exist,
+                'Major': self.major_commissions_exist,
+                'Night': self.night_commissions_exist,
+            }
+            target_list = type_dispatch.get(best.type)
+            if target_list is not None:
+                target_list.remove(best)
+            if best.type == 'Urgent':
+                self.running_urgent += 1
+                self._invalidate_expire_cache()
+            best.finish_time = self.timeline + best.time
+            self._invalidate_finish_cache()
+            self.commissions_run.append(best)
 
     def _can_start_battle(self):
         return self.oil >= self.total_oil_cost
@@ -333,67 +419,19 @@ class CommissionSimulator:
             if random() < self.config['BOSS_DROP_RATE']:
                 self._add_urgent()
 
-    def _run_one(self):
-        if self._priority_dirty:
-            self._cached_sorted = sorted(
-                self.daily_commissions_exist + self.urgent_commissions_exist +
-                self.night_commissions_exist + self.major_commissions_exist,
-                key=lambda c: c.priority, reverse=True
-            )
-            self._priority_dirty = False
-        all_commissions_exist = self._cached_sorted
-
-        if not all_commissions_exist:
-            return
-
-        if all_commissions_exist[0].priority == PRIORITY_NONE:
-            if not self.run_shortest:
-                return False
-            shortest = 1000
-            if len(self.daily_commissions_exist) > 0:
-                commission_to_run = self.daily_commissions_exist[0]
-            else:
-                return
-            for commission in self.daily_commissions_exist:
-                if commission.time < shortest:
-                    shortest = commission.time
-                    commission_to_run = commission
-            self.daily_commissions_exist.remove(commission_to_run)
-            commission_to_run.finish_time = self.timeline + commission_to_run.time
-            self.commissions_run.append(commission_to_run)
-            self._invalidate_priority_cache()
-            return
-
-        commission_to_run = all_commissions_exist[0]
-        type_dispatch = {
-            'Daily': self.daily_commissions_exist,
-            'Extra': self.daily_commissions_exist,
-            'Urgent': self.urgent_commissions_exist,
-            'Major': self.major_commissions_exist,
-            'Night': self.night_commissions_exist,
-        }
-        target_list = type_dispatch.get(commission_to_run.type)
-        if target_list is not None:
-            target_list.remove(commission_to_run)
-        if commission_to_run.type == 'Urgent':
-            self.running_urgent += 1
-        commission_to_run.finish_time = self.timeline + commission_to_run.time
-        self.commissions_run.append(commission_to_run)
-        self._invalidate_priority_cache()
-
     def _compute_next_event_time(self):
         next_time = self._end_time + 1
         today_base = (self.timeline // DAY) * DAY
 
         if not self._in_battle and self.commissions_run:
-            earliest = min(c.finish_time for c in self.commissions_run)
-            if earliest < next_time:
-                next_time = earliest
+            min_ft = self._get_min_finish_time()
+            if min_ft < next_time:
+                next_time = min_ft
 
         if not self._in_battle and self.urgent_commissions_exist:
-            earliest = min(c.expire_time for c in self.urgent_commissions_exist)
-            if earliest < next_time:
-                next_time = earliest
+            min_et = self._get_min_expire_time()
+            if min_et < next_time:
+                next_time = min_et
 
         if self._in_battle and self._battle_end_time < next_time:
             next_time = self._battle_end_time

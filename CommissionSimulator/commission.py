@@ -8,7 +8,7 @@ DAY = 24 * 60
 WEEK = 7 * 24 * 60
 
 
-@dataclass
+@dataclass(eq=False)
 class Commission:
     id: int
     tag: str
